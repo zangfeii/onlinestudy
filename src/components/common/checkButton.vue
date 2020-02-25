@@ -1,7 +1,10 @@
 <template>
-  <div :class="{checkbutton:ischek}">
-    <img src='../../assets/img/login/tick.svg' alt="" class="checkbuttonimg">  
-  </div>  
+  <div class="bg">
+    <div :class="{checkbutton:ischek}">
+      <img src='../../assets/img/login/tick.svg' alt="" class="checkbuttonimg">  
+    </div>
+  </div>
+    
 </template>
 
 <script>
@@ -18,15 +21,22 @@ export default {
 </script>
 
 <style>
-  .checkbuttonimg {
-    border: 0.5px solid #919191;
+  .bg {
+    background:white;
     border-radius: 50%;
     width: 17px;
     height: 17px;
   }
+  
+  .checkbuttonimg {
+    border: 0.5px solid #919191;
+    border-radius: 50%;
+    /* width: 17px;
+    height: 17px; */
+  }
 
   .checkbutton {
-    background: red;
+    background: blue;
     border-radius: 50%;
     width: 17px;
     height: 17px;

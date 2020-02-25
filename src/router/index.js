@@ -6,6 +6,7 @@ const Login = () =>
 const registerUser = () =>
   import ('../views/login/registerUser.vue')
 
+
 Vue.use(VueRouter)
 
 const routes = [{
@@ -17,8 +18,8 @@ const routes = [{
     component: Login,
   }, {
     path: '/register',
-    component: registerUser
-  }
+    component: registerUser,
+  },
 ]
 
 const router = new VueRouter({
