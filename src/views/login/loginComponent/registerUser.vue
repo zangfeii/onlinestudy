@@ -3,7 +3,7 @@
     <!-- 顶部 -->
     <div class="topTitle">
       <div class="logo">
-        <span><img src="../../../public/logo.png" alt=""></span>
+        <span><img src="../../../../public/logo.png" alt=""></span>
         <div>在线教育</div>
       </div>
       <div class="backlogin"><a href="#" @click="back">返回登陆</a></div>
@@ -41,10 +41,10 @@
 </template>
 
 <script>
-import checkButton from '../../components/common/checkButton'
-import verifyCode from '../../components/common/verifyCode'
+import checkButton from '../../../components/common/checkButton'
+import verifyCode from '../../../components/common/verifyCode'
 
-import {registerUsers} from '../../network/user'
+import {registerUsers} from '../../../network/user'
 
 export default {
   name: 'registerUser',
@@ -162,18 +162,6 @@ export default {
     line-height: 70px;
   }
  
-  a {
-    text-decoration: none;
-  }
-
-  a:link {
-    color: black;
-  }
-
-  a:hover {
-    color: skyblue;
-  }
-
   .conent {
     position: relative;
     display: flex;

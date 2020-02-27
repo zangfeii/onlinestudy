@@ -2,3 +2,15 @@
   padding: 0;
   margin: 0;
 }
+
+a {
+  text-decoration: none;
+}
+
+a:link {
+  color: black;
+}
+
+a:hover {
+  color: skyblue;
+}

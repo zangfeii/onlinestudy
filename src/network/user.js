@@ -14,5 +14,11 @@ export function userLogin(data) {
     method: 'post',
     data
   })
+}
 
+export function getCotranct() {
+  return request({
+    url: '/contact',
+    method: 'get'
+  })
 }

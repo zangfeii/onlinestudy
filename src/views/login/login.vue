@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import loginIn from './login/loginIn'
+import loginIn from './loginComponent/loginIn'
 export default {
   name: 'login',
   components: {loginIn}
@@ -17,7 +17,7 @@ export default {
     /* height: 100%; */
     /* width: 100vh; */
     /* height: 100vh; */
-    background: url('../assets/img/login/loginBackGround.jpg');
+    background: url('../../assets/img/login/loginBackGround.jpg');
     /* 背景图自适应大小 */
     background-size: 100% 100%;
     background-repeat: no-repeat;

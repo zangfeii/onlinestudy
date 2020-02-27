@@ -1,5 +1,5 @@
 <template>
-  <div id='loginIn'>
+  <div id='loginInn'>
     <div class="userPwd">
       <el-form :model="loginForm" status-icon :rules="rules" ref="loginForm" label-width="70px">
         <el-form-item label="用户名" prop="name">
@@ -14,22 +14,33 @@
         <el-button type="primary" class="btn" @click="register">注册</el-button>
       </div>
     </div>
+    <!-- 用户登陆提醒 -->
+    <el-dialog title="提示" :visible.sync="remindDialogVisible" width="30%">
+      <span>这该账号已经被禁止登陆,请联系管理员<a :href="connectionQQ">466602093</a></span>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="remindDialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="remindDialogVisible = false">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
 <script>
-import registerUser from './registerUser'
-
-import {userLogin} from '../../network/user'
+import {userLogin, getCotranct} from '../../../network/user'
 
 export default {
   name: 'loginIn',
-  components:{ registerUser },
   data() {
     return {
+      remindDialogVisible: false,
+      connectionQQ: '',
       loginForm: {
         name: '',
         pwd: '',
+      },
+      paramsform: {
+        iid : '',
+        iname: '',
       },
       rules: {
         name: [
@@ -45,9 +56,7 @@ export default {
   },
   methods: {
     register() {
-      setTimeout(() => {
-        this.$router.push('/register') 
-      },300)
+      this.$router.push('/register') 
     },
     login() {
       this.$refs.loginForm.validate(valid =>{
@@ -57,7 +66,25 @@ export default {
         userLogin(this.loginForm).then((res => {
         console.log(res);
         if(res.data.status === 200) {
+          if(res.data.userInfo.status === 1) {
+          this.paramsform.iid = res.data.userInfo.user_id
+          this.paramsform.iname = res.data.userInfo.name
+          // 在sessionStorage中储存token
+          window.sessionStorage.setItem('token', res.data.token)
+          // 在sessionStorage中储存头像图片
+          window.sessionStorage.setItem('headpic',res.data.userInfo.hpic)
+          this.$router.push({
+            name: 'home',
+            params:  this.paramsform
+          })
           return this.$message.success("登陆成功")
+          } else {
+            getCotranct().then(res => {
+              this.connectionQQ = res.data
+              this.remindDialogVisible = true
+              return
+            })
+          }
         } else {
           return this.$message.error("登陆失败,请检查账号密码")
         }
@@ -69,7 +96,7 @@ export default {
 </script>
 
 <style>
-  #loginIn {
+  #loginInn {
     display: flex;
     flex-direction: column;
     justify-content: center;
