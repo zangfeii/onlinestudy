@@ -72,7 +72,9 @@ export default {
           // 在sessionStorage中储存token
           window.sessionStorage.setItem('token', res.data.token)
           // 在sessionStorage中储存头像图片
-          window.sessionStorage.setItem('headpic',res.data.userInfo.hpic)
+          window.sessionStorage.setItem('headpic', res.data.userInfo.hpic)
+          //保存用户信息
+          window.sessionStorage.setItem('user', JSON.stringify(res.data.userInfo))
           this.$router.push({
             name: 'home',
             params:  this.paramsform
