@@ -47,7 +47,6 @@ export default {
     defaulPath() {
       if(!this.titleIndexPathData) {
         this.titleIndexPathData = window.sessionStorage.getItem('tabTitlePath') || 'course'
-        console.log(this.titleIndexPathData);
       } else {
         this.titleIndexPathData = 'course'
       }
@@ -95,7 +94,8 @@ export default {
   }
 
   .tabmain {
-    width: 870px;
+    width: 900px;
+    height: 600px;
   }
 
   .titleClickColor {

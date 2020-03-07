@@ -17,6 +17,11 @@ const notebook = () =>
   import ('../components/content/notebook/note.vue')
 const createCourse = () =>
   import ('../views/createCourse/createCourse.vue')
+const teacher = () =>
+  import ('../views/courseInfo/teacher/teacher.vue')
+const student = () =>
+  import ('../views/courseInfo/student/student.vue')
+
 
 
 // 解决报Uncaught (in promise) undefined错误
@@ -62,7 +67,15 @@ const routes = [{
     path: 'notebook',
     component: notebook
   }],
-}, ]
+}, {
+  path: '/myCourse/teacherCourse?tecid=:iid&courseid=:cciid',
+  component: teacher,
+  name: 'teacher'
+}, {
+  path: '/myCourse/studentCourse?stuid=:iid&courseid=:sciid',
+  component: student,
+  name: 'student'
+}]
 
 const router = new VueRouter({
   routes,

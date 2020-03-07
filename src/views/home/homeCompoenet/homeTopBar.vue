@@ -20,13 +20,21 @@
           
         </div>
         <div class="courseSearch">
-          <!-- 之后改成输入内容,有下拉内容提醒 -->
-          <el-input  placeholder="搜索感兴趣的课程"></el-input>
-          <el-button type="primary" class="searchBtn">搜索</el-button>
+          <el-input  placeholder="请输入课程邀请码" v-model="invitedCode"></el-input>
+          <el-button type="primary" class="searchBtn"  @click="enterCourse">添加</el-button>
         </div>
       </div>
+
+      <el-dialog title="查询结果" :visible.sync="enterCoursedialogVisible" width="30%" height="40%">
+        <course-content :courses-info='queriedCourse' class="addCourseDialog"
+                         @click.native="sureEnterCourse"  :is-checked='isCheckedEnter'>
+        </course-content>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="enterCoursedialogVisible = false">取 消</el-button>
+          <el-button type="primary" @click="successAddCourse">确定加入</el-button>
+        </span>
+      </el-dialog>
       <!-- 右边 -->
-      <!-- <div class="right">{{uname}}</div> -->
       <div class="right">
         <img :src="getHeadPic" class="userPic">
         <span :class="{iname:isoverflow}">{{iname}}</span>
@@ -37,27 +45,90 @@
 </template>
 
 <script>
+import  courseContent from '../../../components/content/course/homeCourseCompoent/courseContent'
+import { queryCourseByInCode, beforeEnterCuorseQuery } from '../../../network/query'
+import { stuEnterCourse, oneCourseStuInfo } from '../../../network/user'
 export default {
   name: 'homeTopBar',
+  components: { courseContent },
   data() {
     return {
       iid:'',
       iname: '',  
-      courses: ['小学','初中','高中','大学'] 
+      courses: ['小学','初中','高中','大学'],
+      invitedCode: '',
+      enterCoursedialogVisible: false,
+      queriedCourse: [],
+      isCheckedEnter: false,
+      isEnter: false,
+      courseStu: {},
+      //用户进入课程前的查询
+      useEnterBeforeQueryResult : {}
     }
   },
   methods: {
     getParams() {
      this.iid = this.$route.params.iid 
      this.iname = this.$route.params.iname
-     console.log('221222');
     },
     quit() {
       window.sessionStorage.clear()
       setTimeout(() => {
         this.$router.push('/login')
       }, 600);
+    },
+    enterCourse() {
+      const getInvitedCode = this.invitedCode
+      queryCourseByInCode({invitedCode: getInvitedCode}).then(res => {
+        if(res.data.status === 200 ) {
+          this.queriedCourse = res.data.courses
+          console.log(this.queriedCourse);
+        }
+      })
+      this.enterCoursedialogVisible = true
+    },
+    sureEnterCourse() {
+      this.isCheckedEnter = !this.isCheckedEnter
+      this.isEnter = !this.isEnter
+     },
+     //获取进入课程所需要保存的数据
+    getStuCourseInfo() {
+      const courseStuInfo = JSON.parse(window.sessionStorage.getItem('user'))
+      this.courseStu = new oneCourseStuInfo(this.queriedCourse[0], courseStuInfo)
+      return this.courseStu
+    },
      
+    //用户进入课程
+    lastEnterCurse(enterCourerParamsData) {
+     stuEnterCourse(enterCourerParamsData).then(res => {
+          if(res.data.status === 200) {
+            if(this.queriedCourse[0].cstatus === 1) {
+              this.$message.success('成功添加该课程')
+              this.isEnter = false
+              this.enterCoursedialogVisible = false
+            } else {
+              return this.$message.error('该课程已经结束')
+            }
+          } else {
+              this.$message.error('添该加课程失败')
+          }
+        })
+    },
+    successAddCourse() {
+      if(this.isEnter === true){
+        const courseStuParams = this.getStuCourseInfo()
+        beforeEnterCuorseQuery({useIid:courseStuParams.cs_stuiid, courseId: courseStuParams.cs_courseiid}).then(res => {
+          if(res.data.status === 210) {
+            this.$message.error('您已经进入该课程学习,不能重复添加')
+        } else if(res.data.status === 209) {
+            this.$message.error('抱歉您不能进入自己创建的课程学习')
+        } else {
+            this.lastEnterCurse(courseStuParams)
+        }
+       })
+      } else {
+        this.$message.error('请先点击选择该课程')
+      }
     }
   },
    created() {
@@ -70,11 +141,10 @@ export default {
      isoverflow() {
        if(this.iname.length >= 5 ) {
           return true
-      } else {
+       } else {
         return false
-      }
-       
-     }
+       } 
+     },
    },
 }
 </script>
@@ -164,7 +234,9 @@ export default {
     padding-right: 40px;
     color: black;
   }
-
-   
-
+  
+  .addCourseDialog {
+    width: 282px;
+    cursor: pointer;
+  }
 </style>
