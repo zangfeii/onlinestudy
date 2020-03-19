@@ -56,9 +56,10 @@ export default {
     createCourseSure() {
       this.addCreateCourseRuleForm.cincode = getInvitedCode()
       createCoursing(this.addCreateCourseRuleForm).then(res => {
-        console.log(res);
+        // console.log(res);
         if(res.data.status === 200) {
           this.$router.back()
+          // console.log(res.data.result);
           return this.$message.success('创建课程成功')
         } else {
           return this.$message.error('创建课程失败')

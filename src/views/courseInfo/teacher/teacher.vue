@@ -1,12 +1,34 @@
 <template>
   <div id="teacherCourse">
-    <h1>老师的课程界面</h1>
+    <home-top-bar :show-add-course-btn='false'></home-top-bar>
+    <course-mange-title :mange-title-btns='courseTitle'></course-mange-title>
   </div>
 </template>
 
 <script>
+import homeTopBar from '../../home/homeCompoenet/homeTopBar'
+import courseMangeTitle from './teacherCompoent/courseMangeTitle'
 export default {
-  name: 'teacher'
+  name: 'teacher',
+  components :{ homeTopBar, courseMangeTitle },
+  data() {
+    return {
+      courseTitle: [
+        { title: '首页', path: 'homePage'},
+        { title: '资料', path: 'courseData',},
+        { title: '消息', path: 'courseMessage'},
+        { title: '通知', path: 'courseNotice'},
+        { title: '管理', path: 'courseMange'},
+      ]
+    }
+  },
+  created() {
+    document.title = this.$route.meta.title
+    console.log(this.$route);
+  },
+  methods: {
+    
+  },
 }
 </script>
 

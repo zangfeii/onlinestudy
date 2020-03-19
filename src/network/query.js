@@ -40,3 +40,35 @@ export function getUserEnterCoueses(data) {
     data
   })
 }
+
+export function queryCurrentCourseChapters(data) {
+  return request({
+    url: '/chapters/quereyChapter',
+    method: 'post',
+    data
+  })
+}
+
+export function queryCurrentCourseTopic(data) {
+  return request({
+    url: '/Topic/queryCurrentCourseTopic',
+    method: 'post',
+    data
+  })
+}
+
+export function queryCourrentCourseStus(data) {
+  return request({
+    url: '/courseStu/queryCourrentCourseStusList',
+    method: 'post',
+    data
+  })
+}
+
+export function queryUsersListsByIds(data) {
+  return request({
+    url: '/user/queryUsersByids',
+    method: 'post',
+    data
+  })
+}

@@ -1,7 +1,7 @@
 <template>
   <div id="courseContent">
-    <div class="courseItem" v-show="computedItemShow" :class="{isCheckedStyle: isChecked }">
-      <course-item :courses-item='item' v-for="item in coursesInfo" :key="item._id" @click.native='itemClick(item._id, item.cteacheriid)' class="hoverCss"></course-item>
+    <div class="courseItem" v-show="computedItemShow" :class="{isCheckedStyle: isChecked }" >
+      <course-item :courses-item='item' v-for="item in coursesInfo" :key="item._id" @click.native='itemClick(item, item._id, item.cteacheriid, item.cteacher)' class="hoverCss" target='_blank'></course-item>
     </div>
     <div v-show="!computedItemShow" class="noData">暂无数据</div>
   </div>
@@ -36,28 +36,46 @@ export default {
   methods: {
     //获取当前用户id
     getCurrentUserId() {
-      return JSON.parse(window.sessionStorage.getItem('user')).user_id
+      return JSON.parse(window.sessionStorage.getItem('user'))
     },
     //老师课程界面跳转
-    toTeacherCourse(cid, tid) {
-      const paramsData = { tecid: tid, cciid: tid}
+    toTeacherCourse(cid,  teacname) {
+      const paramsData = { 
+        iname: teacname,
+        cciid: cid 
+      } 
+      console.log(paramsData);
       const routeData = this.$router.resolve({
         name: 'teacher',
         params: paramsData
       })
       window.open(routeData.href, '_blank')
-      console.log(routeData);
+
     },
-    itemClick(ciid, teciid) {
+    //学生课程界面跳转
+    toStuCourse(cid, stuName) {
+      const stuParamsData = {
+        iname: stuName,
+        sciid: cid
+      }
+      const stuRoute = this.$router.resolve({
+        name: 'student',
+        params: stuParamsData
+      })
+      window.open( stuRoute.href, '_blank')
+    },
+    itemClick(item, ciid, cteciid, name) {
       // const routeData = this.$router.resolve(path)
-      const currentUserid = this.getCurrentUserId()
-      if(teciid === currentUserid) {
-        this.toTeacherCourse(ciid, teciid)
+      window.sessionStorage.setItem('currentCourseInfo', JSON.stringify(item))
+      const currentUserid = this.getCurrentUserId().user_id
+      const iname = this.getCurrentUserId().name
+      if(cteciid === currentUserid) {
+        this.toTeacherCourse(ciid, name)
         console.log('老师课程界面');
       } else {
+          this.toStuCourse(ciid, iname)
           console.log('学生课程界面');
       }
-      
     }
   },
 }

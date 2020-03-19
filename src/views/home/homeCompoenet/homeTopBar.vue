@@ -19,16 +19,14 @@
           <span class="nav"><a>学校</a> </span>
           
         </div>
-        <div class="courseSearch">
+        <div class="courseSearch" v-if="showAddCourseBtn">
           <el-input  placeholder="请输入课程邀请码" v-model="invitedCode"></el-input>
           <el-button type="primary" class="searchBtn"  @click="enterCourse">添加</el-button>
         </div>
       </div>
 
       <el-dialog title="查询结果" :visible.sync="enterCoursedialogVisible" width="30%" height="40%">
-        <course-content :courses-info='queriedCourse' class="addCourseDialog"
-                         @click.native="sureEnterCourse"  :is-checked='isCheckedEnter'>
-        </course-content>
+        <course-content :courses-info='queriedCourse' class="addCourseDialog"></course-content>
         <span slot="footer" class="dialog-footer">
           <el-button @click="enterCoursedialogVisible = false">取 消</el-button>
           <el-button type="primary" @click="successAddCourse">确定加入</el-button>
@@ -51,46 +49,57 @@ import { stuEnterCourse, oneCourseStuInfo } from '../../../network/user'
 export default {
   name: 'homeTopBar',
   components: { courseContent },
+  props: {
+    showAddCourseBtn: {
+      type: Boolean,
+      default: true
+     }
+  },
   data() {
     return {
+      //当前用户的id
       iid:'',
+      //当前用户的名字
       iname: '',  
       courses: ['小学','初中','高中','大学'],
+      //邀请码
       invitedCode: '',
       enterCoursedialogVisible: false,
+      //根据邀请码查询到的课程信息
       queriedCourse: [],
       isCheckedEnter: false,
       isEnter: false,
       courseStu: {},
       //用户进入课程前的查询
-      useEnterBeforeQueryResult : {}
+      useEnterBeforeQueryResult : {},
+      isIncode: true
     }
   },
   methods: {
     getParams() {
      this.iid = this.$route.params.iid 
-     this.iname = this.$route.params.iname
+     this.iname = JSON.parse(window.sessionStorage.getItem('user')).name
     },
+    //退出
     quit() {
       window.sessionStorage.clear()
       setTimeout(() => {
         this.$router.push('/login')
       }, 600);
     },
+    //根据邀请码查询的该课程信息
     enterCourse() {
       const getInvitedCode = this.invitedCode
+      console.log(getInvitedCode);
       queryCourseByInCode({invitedCode: getInvitedCode}).then(res => {
-        if(res.data.status === 200 ) {
+        if(res.data.status === 200) {
           this.queriedCourse = res.data.courses
-          console.log(this.queriedCourse);
+        } else {
+          this.isIncode = false
         }
       })
       this.enterCoursedialogVisible = true
     },
-    sureEnterCourse() {
-      this.isCheckedEnter = !this.isCheckedEnter
-      this.isEnter = !this.isEnter
-     },
      //获取进入课程所需要保存的数据
     getStuCourseInfo() {
       const courseStuInfo = JSON.parse(window.sessionStorage.getItem('user'))
@@ -104,7 +113,6 @@ export default {
           if(res.data.status === 200) {
             if(this.queriedCourse[0].cstatus === 1) {
               this.$message.success('成功添加该课程')
-              this.isEnter = false
               this.enterCoursedialogVisible = false
             } else {
               return this.$message.error('该课程已经结束')
@@ -113,26 +121,64 @@ export default {
               this.$message.error('添该加课程失败')
           }
         })
+    }, 
+    //判断是否有该邀请码的课程
+    isInCodeCourse() {
+      if(!this.isIncode) {
+        return false
+      } else {
+        return true
+      }
     },
-    successAddCourse() {
-      if(this.isEnter === true){
-        const courseStuParams = this.getStuCourseInfo()
-        beforeEnterCuorseQuery({useIid:courseStuParams.cs_stuiid, courseId: courseStuParams.cs_courseiid}).then(res => {
-          if(res.data.status === 210) {
-            this.$message.error('您已经进入该课程学习,不能重复添加')
-        } else if(res.data.status === 209) {
-            this.$message.error('抱歉您不能进入自己创建的课程学习')
+    //添加课程
+    addCourseLast() {
+      const courseStuParams = this.getStuCourseInfo()
+      //判断该课程是否是当前用户创建的
+      if(this.queriedCourse[0].cteacheriid === this.iid) {
+        return  this.$message.error('抱歉您不能进入自己创建的课程学习')
+      } else {
+          beforeEnterCuorseQuery({useIid:courseStuParams.cs_stuiid, courseId: courseStuParams.cs_courseiid}).then(res => {
+        if(res.data.status === 210) {
+          this.$message.error('您已经进入该课程学习,不能重复添加')
         } else {
             this.lastEnterCurse(courseStuParams)
-        }
-       })
-      } else {
-        this.$message.error('请先点击选择该课程')
+          }
+         })
       }
+    },
+    successAddCourse() {
+       const isIncodeCouseResult = this.isInCodeCourse()
+       console.log(this.isInCodeCourse());
+       console.log(isIncodeCouseResult);
+       if(isIncodeCouseResult) {
+          this.addCourseLast()
+       } else {
+          this.$message.error('请检查邀请码是否正确')
+       }
     }
   },
    created() {
      this.getParams()
+   },
+   watch: {
+     enterCoursedialogVisible(newVal, oldVal) {
+       if(!newVal) {
+         this.isIncode = true
+         this.isEnter = false
+         this.queriedCourse = []
+       } 
+     },
+     $route: {
+       handler: function(val, oldVal){
+       if(val === oldVal) {
+         console.log('dedededede');
+       } else {
+         console.log('11111111111111111111');
+       }
+      },
+      // 深度观察监听
+      deep: true
+     }
    },
    computed: {
      getHeadPic() {
@@ -142,7 +188,7 @@ export default {
        if(this.iname.length >= 5 ) {
           return true
        } else {
-        return false
+          return false
        } 
      },
    },

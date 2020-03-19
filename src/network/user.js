@@ -38,6 +38,37 @@ export function stuEnterCourse(data) {
     data
   })
 }
+
+export function createChapter(data) {
+  return request({
+    url: '/chapters/addChapter',
+    method: 'post',
+    data
+  })
+}
+export function deleteChapter(data) {
+  return request({
+    url: '/chapters/deleteBeforeCourseChapters',
+    method: 'post',
+    data
+  })
+}
+
+export function createCourseTopic(data) {
+  return request({
+    url: '/Topic/createTopic',
+    method: 'post',
+    data
+  })
+}
+
+export function deleteCourseOneTopic(data) {
+  return request({
+    url: '/Topic/deleteCurrentCourseTopic',
+    method: 'post',
+    data
+  })
+}
 export class oneCourseStuInfo {
   constructor(teacher, stu) {
     this.cs_title = teacher.ctitle
@@ -47,5 +78,14 @@ export class oneCourseStuInfo {
     this.cs_desc = teacher.cdesc
     this.cs_stuiid = stu.user_id
     this.cs_stuname = stu.name
+  }
+}
+
+export class stuCreateOneTopic {
+  constructor(userInfo, coueseInfo) {
+    this.courseiid = coueseInfo._id,
+      this.teacheriid = coueseInfo.cteacheriid
+    this.CreateName = userInfo.name
+    this.pic = userInfo.hpic
   }
 }

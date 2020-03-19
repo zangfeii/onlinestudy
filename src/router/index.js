@@ -21,10 +21,25 @@ const teacher = () =>
   import ('../views/courseInfo/teacher/teacher.vue')
 const student = () =>
   import ('../views/courseInfo/student/student.vue')
-
-
-
-// 解决报Uncaught (in promise) undefined错误
+const courseHome = () =>
+  import ('../views/courseInfo/teacher/teacherCompoent/courseHome/courseHome.vue')
+const courseData = () =>
+  import ('../views/courseInfo/teacher/teacherCompoent/courseData/courseData.vue')
+const courseMessage = () =>
+  import ('../views/courseInfo/teacher/teacherCompoent/courseMessage/courseMessage.vue')
+const courseNotice = () =>
+  import ('../views/courseInfo/teacher/teacherCompoent/courseNotice/courseNotice.vue')
+const courseMange = () =>
+  import ('../views/courseInfo/teacher/teacherCompoent/courseMange/courseMange.vue')
+const stuHome = () =>
+  import ('../views/courseInfo/student/stuhome/stuHome.vue')
+const stuCourseData = () =>
+  import ('../views/courseInfo/student/stuCourseData/stuCourseData.vue')
+const stuMessage = () =>
+  import ('../views/courseInfo/student/stuMessage/stuMessage.vue')
+const stuNotic = () =>
+  import ("../views/courseInfo/student/stuNotic/stuNotic.vue")
+  // 解决报Uncaught (in promise) undefined错误
 const originalPush = VueRouter.prototype.push
 VueRouter.prototype.push = function push(location) {
   return originalPush.call(this, location).catch(err => err)
@@ -68,13 +83,84 @@ const routes = [{
     component: notebook
   }],
 }, {
-  path: '/myCourse/teacherCourse?tecid=:iid&courseid=:cciid',
+  path: '/myCourse/teacherCourse/tec=:iname&course=:cciid',
+  redirect: '/myCourse/teacherCourse/tec=:iname&course=:cciid/homePage',
   component: teacher,
-  name: 'teacher'
+  name: 'teacher',
+  // meta: {
+  //   title: '老师管理界面'
+  // },
+  children: [{
+    path: 'homePage',
+    name: 'homePage',
+    component: courseHome,
+    meta: {
+      title: '老师管理界面'
+    }
+  }, {
+    path: 'courseData',
+    name: 'courseData',
+    component: courseData,
+    meta: {
+      title: '资料'
+    }
+  }, {
+    path: 'courseMessage',
+    name: 'courseMessage',
+    component: courseMessage,
+    meta: {
+      title: '消息'
+    }
+  }, {
+    path: 'courseNotice',
+    name: 'courseNotice',
+    component: courseNotice,
+    meta: {
+      title: '通知'
+    }
+  }, {
+    path: 'courseMange',
+    name: 'courseMange',
+    component: courseMange,
+    meta: {
+      title: '管理'
+    }
+  }]
 }, {
-  path: '/myCourse/studentCourse?stuid=:iid&courseid=:sciid',
+  path: '/myCourse/studentCorse/stu=:iname&course=:sciid',
+  redirect: '/myCourse/studentCorse/stu=:iname&course=:sciid/home',
   component: student,
-  name: 'student'
+  name: 'student',
+  meta: {
+    title: '学习进度页面'
+  },
+  children: [{
+    path: 'home',
+    component: stuHome,
+    meta: {
+      title: '学生端主页面'
+    }
+  }, {
+    path: 'download',
+    name: stuCourseData,
+    component: stuCourseData,
+    meta: {
+      title: '资料下载'
+    }
+  }, {
+    path: 'message',
+    component: stuMessage,
+    meta: {
+      title: '我的消息'
+    }
+  }, {
+    path: 'notic',
+    component: stuNotic,
+    meta: {
+      title: '课程通知'
+    }
+  }]
+
 }]
 
 const router = new VueRouter({

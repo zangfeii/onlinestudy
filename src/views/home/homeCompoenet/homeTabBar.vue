@@ -8,7 +8,9 @@
       </div>
     </div>
     <div class="tabmain">
-      <router-view></router-view>
+      <keep-alive>
+        <router-view></router-view>
+      </keep-alive>
     </div>
   </div>  
 </template>
@@ -46,9 +48,9 @@ export default {
     },
     defaulPath() {
       if(!this.titleIndexPathData) {
-        this.titleIndexPathData = window.sessionStorage.getItem('tabTitlePath') || 'course'
+        this.titleIndexPathData = window.sessionStorage.getItem('tabTitlePath') || this.tabRightTitlesPath[0].path
       } else {
-        this.titleIndexPathData = 'course'
+        this.titleIndexPathData = this.tabRightTitlesPath[0].path
       }
     }
   }, 
