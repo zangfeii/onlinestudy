@@ -31,6 +31,8 @@ export default {
 <style>
   .stuNums {
     margin-top: 10px;
+    height: 30px;
+    line-height: 30px;
     text-align: center;
   }
 </style>

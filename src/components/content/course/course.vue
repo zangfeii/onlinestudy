@@ -33,7 +33,7 @@ import courseContent from './homeCourseCompoent/courseContent'
 
 import { getCotranct } from '../../../network/user'
 import { queryCoursesById, getUserEnterCourseIdds, getUserEnterCoueses } from '../../../network/query'
-
+ 
 export default {
   name: 'course',
   components: { upLoad, courseContent},
@@ -57,7 +57,17 @@ export default {
     }
   },
   created() {
-    this.queryUserEnterCourseInfoByIds()
+    this.queryUserEnterCoursesTemporary()
+    //事件总线
+    this.$bus.$on('getEnterCourses', ()=> {
+      this.queryUserEnterCoursesTemporary()
+    })
+    this.$bus.$on('outCourseGetOtherCurses', () => {
+      this.queryUserEnterCoursesTemporary()
+    })
+    this.$bus.$on('deleteCourseGetOtherCourses', () => {
+      this.queryUserCourses()
+    })
   },
   methods: {
     getUserId() {
@@ -84,16 +94,17 @@ export default {
       const queryId = this.getUserId()
       getUserEnterCourseIdds({enterCoursesUserId: queryId}).then(res => {
         if(res.data.status ===200) {
-          this.isEnterCourse = true
           const queryUserEnterCourseResult = res.data.result 
           queryUserEnterCourseResult.forEach(ele => {
             this.queryCourseEnterIds.push(ele.cs_courseiid)
           })
+          this.queryUserEnterCourseInfoByIds()
         } else {
-            this.isEnterCourse = false
+            this.queryCourseEnterIds = []
         }
       })
       this.queryUserCreateCourses =[{}]
+      console.log(this.queryCourseEnterIds);
     },
 
     //根据查询所有的参加的课程id查询用户添加学习的课程信息
@@ -101,8 +112,7 @@ export default {
       this.createCourse = true 
       this.enterShowl = true,
       this.createShow = false
-      this.queryUserEnterCoursesTemporary() 
-      if(this.isEnterCourse === true) {
+      if(this.queryCourseEnterIds.length) {
         getUserEnterCoueses({sendParams: this.queryCourseEnterIds}).then(res => {
         this.queryUserEnterCourses = res.data.data
         })
@@ -116,10 +126,8 @@ export default {
       this.whichMyCouese = index
       if(index === 0) {
         this.deleteCourse = true
-        console.log('退出');
-        this.queryUserEnterCourseInfoByIds()
+        this.queryUserEnterCoursesTemporary()
       } else {
-        console.log('删除');
         this.deleteCourse = true
         this.queryUserCourses()
       }

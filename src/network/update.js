@@ -23,3 +23,11 @@ export function updateUserPwd(data) {
     data
   })
 }
+
+export function updateCourseCoverImg(data) {
+  return request({
+    url: '/course/updateCourseCoverImg',
+    method: 'post',
+    data
+  })
+}

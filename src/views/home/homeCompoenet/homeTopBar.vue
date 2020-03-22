@@ -92,7 +92,6 @@ export default {
     //根据邀请码查询的该课程信息
     enterCourse() {
       const getInvitedCode = this.invitedCode
-      console.log(getInvitedCode);
       queryCourseByInCode({invitedCode: getInvitedCode}).then(res => {
         if(res.data.status === 200) {
           this.queriedCourse = res.data.courses
@@ -114,6 +113,7 @@ export default {
      stuEnterCourse(enterCourerParamsData).then(res => {
           if(res.data.status === 200) {
             if(this.queriedCourse[0].cstatus === 1) {
+              this.$bus.$emit('getEnterCourses')
               this.$message.success('成功添加该课程')
               this.enterCoursedialogVisible = false
             } else {

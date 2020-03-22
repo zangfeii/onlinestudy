@@ -1,29 +1,34 @@
 <template>
   <div id="courseMange">
     <course-stus-list :stu-list-data='usersList'></course-stus-list>
+    <course-mange-conent :mange-course-info='currentTecCourseInfo'></course-mange-conent>
   </div>
 </template>
 
 <script>
 import courseStusList from './courseMangeCompoent/courseStusList'
+import courseMangeConent from './courseMangeCompoent/courseMangeConent'
 // import courseMessageWindow from './courseMessageCompoent/courseMessageWindow'
-import { queryCourrentCourseStus, queryUsersListsByIds } from '../../../../../network/query'
+import { queryCourrentCourseStus, queryUsersListsByIds, queryCurrentTecCourseInfo } from '../../../../../network/query'
 
 export default {
   name: 'courseMange',
-  components: { courseStusList, },
+  components: { courseStusList, courseMangeConent },
   data() {
     return {
       courseTecheriid: {},
-      usersList: []
+      usersList: [],
+      currentTecCourseInfo: {}
     }
   },
   created() {
     document.title = this.$route.meta.title
     this.courseTecheriid = JSON.parse(window.sessionStorage.getItem('currentCourseInfo')) 
     this.querStuList()
+    this.queryCurrentTecCourseInfo()
   },
   methods: {
+    //获取当前课程学生部分信息
     querStuList() {
       console.log(this.courseTecheriid);
       queryCourrentCourseStus({
@@ -36,9 +41,21 @@ export default {
           }).then(res => {
             if(res.data.status === 200) {
               this.usersList = res.data.result
-              console.log(this.usersList);
             }
           })
+        }
+      })
+    },
+    //查询当前课程信息
+    queryCurrentTecCourseInfo() {
+      queryCurrentTecCourseInfo({
+        teacheriid: this.courseTecheriid.cteacheriid,
+        courseiid: this.courseTecheriid._id
+      }).then(res => {
+        if(res.data.status === 200) {
+          this.currentTecCourseInfo = res.data.result
+        } else {
+            this.currentTecCourseInfo = {}
         }
       })
     }

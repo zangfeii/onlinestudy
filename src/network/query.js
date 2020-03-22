@@ -88,3 +88,11 @@ export function updateUserPic(data) {
     data
   })
 }
+
+export function queryCurrentTecCourseInfo(data) {
+  return request({
+    url: '/queryCourse/queryCurrentTecCourseInfo',
+    method: 'post',
+    data
+  })
+}

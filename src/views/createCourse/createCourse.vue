@@ -55,15 +55,18 @@ export default {
   methods: {
     createCourseSure() {
       this.addCreateCourseRuleForm.cincode = getInvitedCode()
-      createCoursing(this.addCreateCourseRuleForm).then(res => {
-        // console.log(res);
-        if(res.data.status === 200) {
-          this.$router.back()
-          // console.log(res.data.result);
-          return this.$message.success('创建课程成功')
-        } else {
-          return this.$message.error('创建课程失败')
+      this.$refs.addCreateCourseRuleForm.validate( valid => {
+        if(!valid) {
+          return this.$message.error('请填写完整')
         }
+        createCoursing(this.addCreateCourseRuleForm).then(res => {
+          if(res.data.status === 200) {
+            this.$router.back()
+            return this.$message.success('创建课程成功')
+        } else {
+            return this.$message.error('创建课程失败')
+         }
+        })
       })
     },
     createCourseBtnBack() {

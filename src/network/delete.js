@@ -7,3 +7,11 @@ export function singOutCourseById(data) {
     data
   })
 }
+
+export function deleteCouse(data) {
+  return request({
+    url: '/course/deleteCourse',
+    method: 'post',
+    data
+  })
+}
