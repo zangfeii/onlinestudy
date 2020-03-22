@@ -58,7 +58,7 @@ export default {
        this.params.courseiid = this.couseInfo._id
        this.params.teacheriid = this.couseInfo.cteacheriid
        this.params.CreateName = this.couseInfo.cteacher
-       this.params.pic = this.userInfo.hpic
+       this.params.createiid = this.userInfo.user_id
        this.params.topicData = this.inputTopic
      },
      //查询当前的课程话题

@@ -32,6 +32,7 @@ export default {
     this.getCourseTopics()
     console.log(this.currentUsersCourseInfo);
     this.createTopicInfo = new stuCreateOneTopic(this.currentUsersCourseInfo, this.courseInfo)
+    this.createTopicInfo.createiid = this.currentUsersCourseInfo.user_id
   },
   methods: {
     //获取当前课信息 和用户信息
@@ -68,5 +69,6 @@ export default {
 <style>
   #stuhome {
     display: flex;
+    align-items:flex-start;
   }
 </style>

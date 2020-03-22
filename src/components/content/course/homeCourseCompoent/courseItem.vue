@@ -1,6 +1,10 @@
 <template>
   <div id="courseItem" v-show="coursesItem.cteacher">
     <div class="itemCourse">
+      <div v-if="isDeleteOrOut">
+        <div class="hoverDeleteSingOut" v-if=" isDeleteSingOut" @click.stop="deleteCourse()">删除</div>
+        <div class="hoverDeleteSingOut" v-if="!isDeleteSingOut" @click.stop="SingOutCourse(coursesItem._id)">退出</div>
+      </div>
       <img :src="coursesItem.cpic" alt="" class="cItemImg">
       <div class="cItamTitle">{{coursesItem.ctitle}}</div>
       <p class="cItemTeacher">教师: {{coursesItem.cteacher}}</p>
@@ -10,6 +14,7 @@
 </template>
 
 <script>
+import { singOutCourseById } from '../../../../network/delete'
 export default {
   name: 'courseItem',
   props: {
@@ -18,6 +23,32 @@ export default {
       default() {
         return {}
       }
+    },
+    isDeleteSingOut: {
+      type: Boolean,
+      default: true
+    },
+    isDeleteOrOut: {
+      type: Boolean,
+      default: true
+    }
+  },
+  methods: {
+    deleteCourse() {
+      console.log('删除课程')
+    },
+    SingOutCourse(courseiid) {
+      singOutCourseById({
+        courseStuiid: courseiid,
+        stuiid: this.$route.params.iid
+      }).then(res => {
+        if(res.data.status === 200) {
+          this.$message.success('退出课程成功')
+        } else {
+          this.$message.error('退出课程课程失败')
+        }
+      })
+      console.log('退出课程')
     }
   },
   
@@ -26,6 +57,7 @@ export default {
 
 <style>
   #courseItem {
+    position: relative;
     margin: 5px;
     cursor: pointer;
   }
@@ -40,6 +72,21 @@ export default {
 
   .itemCourse:hover {
     box-shadow:0px 0px 2px 3px skyblue;
+  }
+
+  .hoverDeleteSingOut {
+    display: none;
+    text-align: center;
+    color: #0099FF;
+  }
+
+  .itemCourse:hover .hoverDeleteSingOut {
+    width: 40px;
+    height: 20px;
+    display: block;
+    background: white;
+    position:absolute;
+    right: 0;
   }
 
   .cItemImg {

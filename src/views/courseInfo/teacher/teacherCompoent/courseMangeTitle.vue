@@ -18,7 +18,7 @@ export default {
   name: 'courseMangeTitle',
   props: {
     mangeTitleBtns: {
-      type: [],
+      type: Array,
       default() {
         return []
       }

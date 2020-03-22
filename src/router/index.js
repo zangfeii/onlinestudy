@@ -7,6 +7,8 @@ const registerUser = () =>
   import ('../views/login/loginComponent/registerUser.vue')
 const Home = () =>
   import ('../views/home/home.vue')
+const userInfo = () =>
+  import ('../views/home/homeCompoenet/userInfo/userInfo.vue')
 const course = () =>
   import ('../components/content/course/course.vue')
 const InBox = () =>
@@ -25,12 +27,12 @@ const courseHome = () =>
   import ('../views/courseInfo/teacher/teacherCompoent/courseHome/courseHome.vue')
 const courseData = () =>
   import ('../views/courseInfo/teacher/teacherCompoent/courseData/courseData.vue')
-const courseMessage = () =>
-  import ('../views/courseInfo/teacher/teacherCompoent/courseMessage/courseMessage.vue')
-const courseNotice = () =>
-  import ('../views/courseInfo/teacher/teacherCompoent/courseNotice/courseNotice.vue')
 const courseMange = () =>
   import ('../views/courseInfo/teacher/teacherCompoent/courseMange/courseMange.vue')
+const courseNotice = () =>
+  import ('../views/courseInfo/teacher/teacherCompoent/courseNotice/courseNotice.vue')
+  // const courseMange = () =>
+  //   import ('../views/courseInfo/teacher/teacherCompoent/courseMange/courseMange.vue')
 const stuHome = () =>
   import ('../views/courseInfo/student/stuhome/stuHome.vue')
 const stuCourseData = () =>
@@ -70,6 +72,10 @@ const routes = [{
     path: 'course',
     component: course
   }, {
+    path: 'mange',
+    component: userInfo,
+    name: 'mange'
+  }, {
     path: 'main',
     component: course
   }, {
@@ -91,41 +97,43 @@ const routes = [{
   //   title: '老师管理界面'
   // },
   children: [{
-    path: 'homePage',
-    name: 'homePage',
-    component: courseHome,
-    meta: {
-      title: '老师管理界面'
-    }
-  }, {
-    path: 'courseData',
-    name: 'courseData',
-    component: courseData,
-    meta: {
-      title: '资料'
-    }
-  }, {
-    path: 'courseMessage',
-    name: 'courseMessage',
-    component: courseMessage,
-    meta: {
-      title: '消息'
-    }
-  }, {
-    path: 'courseNotice',
-    name: 'courseNotice',
-    component: courseNotice,
-    meta: {
-      title: '通知'
-    }
-  }, {
-    path: 'courseMange',
-    name: 'courseMange',
-    component: courseMange,
-    meta: {
-      title: '管理'
-    }
-  }]
+      path: 'homePage',
+      name: 'homePage',
+      component: courseHome,
+      meta: {
+        title: '老师管理界面'
+      }
+    }, {
+      path: 'courseData',
+      name: 'courseData',
+      component: courseData,
+      meta: {
+        title: '资料'
+      }
+    }, {
+      path: 'courseMange',
+      name: 'courseMange',
+      component: courseMange,
+      meta: {
+        title: '管理'
+      },
+    }, {
+      path: 'courseNotice',
+      name: 'courseNotice',
+      component: courseNotice,
+      meta: {
+        title: '通知'
+      }
+    },
+    // {
+    //   path: 'courseMange',
+    //   name: 'courseMange',
+    //   component: courseMange,
+    //   meta: {
+    //     title: '管理'
+    //   }
+    // }
+  ]
 }, {
   path: '/myCourse/studentCorse/stu=:iname&course=:sciid',
   redirect: '/myCourse/studentCorse/stu=:iname&course=:sciid/home',
@@ -161,7 +169,7 @@ const routes = [{
     }
   }]
 
-}]
+}, ]
 
 const router = new VueRouter({
   routes,

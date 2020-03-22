@@ -26,7 +26,7 @@
       </div>
 
       <el-dialog title="查询结果" :visible.sync="enterCoursedialogVisible" width="30%" height="40%">
-        <course-content :courses-info='queriedCourse' class="addCourseDialog"></course-content>
+        <course-content :courses-info='queriedCourse' class="addCourseDialog" :delete-or-out-conent='false'></course-content>
         <span slot="footer" class="dialog-footer">
           <el-button @click="enterCoursedialogVisible = false">取 消</el-button>
           <el-button type="primary" @click="successAddCourse">确定加入</el-button>
@@ -35,7 +35,7 @@
       <!-- 右边 -->
       <div class="right">
         <img :src="getHeadPic" class="userPic">
-        <span :class="{iname:isoverflow}">{{iname}}</span>
+        <span :class="{iname:isoverflow}" class="updateUser" @click="updateUser">{{iname}}</span>
         <a @click="quit" class="quitbtn">退出</a>
       </div>
     </div>
@@ -46,6 +46,7 @@
 import  courseContent from '../../../components/content/course/homeCourseCompoent/courseContent'
 import { queryCourseByInCode, beforeEnterCuorseQuery } from '../../../network/query'
 import { stuEnterCourse, oneCourseStuInfo } from '../../../network/user'
+import { queryUserInfoById } from '../../../network/query'
 export default {
   name: 'homeTopBar',
   components: { courseContent },
@@ -57,6 +58,7 @@ export default {
   },
   data() {
     return {
+       getHeadPic: '',
       //当前用户的id
       iid:'',
       //当前用户的名字
@@ -155,10 +157,23 @@ export default {
        } else {
           this.$message.error('请检查邀请码是否正确')
        }
+    },
+    //登陆点击右上角用户名
+    updateUser() {
+      this.$emit('clickUserName')
+    },
+    getUserPic() {
+      queryUserInfoById({
+        useriid: JSON.parse(window.sessionStorage.getItem('user')).user_id
+      }).then(res => {
+        console.log(res);
+        this.getHeadPic = res.data.userinfo.hpci
+      })
     }
   },
    created() {
      this.getParams()
+     this.getUserPic()
    },
    watch: {
      enterCoursedialogVisible(newVal, oldVal) {
@@ -168,22 +183,12 @@ export default {
          this.queriedCourse = []
        } 
      },
-     $route: {
-       handler: function(val, oldVal){
-       if(val === oldVal) {
-         console.log('dedededede');
-       } else {
-         console.log('11111111111111111111');
-       }
-      },
-      // 深度观察监听
-      deep: true
-     }
+  
    },
    computed: {
-     getHeadPic() {
-      return window.sessionStorage.getItem('headpic')
-     },
+    //  getHeadPic() {
+    //   return window.sessionStorage.getItem('headpic')
+    //  },
      isoverflow() {
        if(this.iname.length >= 5 ) {
           return true
@@ -226,6 +231,11 @@ export default {
     justify-content: space-around;
     align-items: center;
     width: 150px;
+    cursor: pointer;
+  }
+  
+  .updateUser:hover {
+    color: #0099FF;
   }
 
   .logoImg {

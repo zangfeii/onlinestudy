@@ -22,8 +22,8 @@
       </el-dialog>
     </div>
     <!-- 课程展示 -->
-    <course-content :courses-info='queryUserEnterCourses' v-if="enterShowl" class="courseContentStyle"></course-content>
-    <course-content :courses-info='queryUserCreateCourses' v-if="createShow" class="courseContentStyle"></course-content>
+    <course-content :courses-info='queryUserEnterCourses' :delete-or-sing-out='!deleteCourse' v-if="enterShowl" class="courseContentStyle"></course-content>
+    <course-content :courses-info='queryUserCreateCourses' :delete-or-sing-out='deleteCourse' v-if="createShow" class="courseContentStyle"></course-content>
   </div>  
 </template>
 
@@ -51,12 +51,13 @@ export default {
       //查询用户添加的课程详细信息的id
       queryCourseEnterIds: [],
       //用户是否添加过课程
-      isEnterCourse: false
+      isEnterCourse: false,
+      deleteCourse: true
 
     }
   },
   created() {
-    this.queryUserEnterCourseInfoByIds();
+    this.queryUserEnterCourseInfoByIds()
   },
   methods: {
     getUserId() {
@@ -86,7 +87,7 @@ export default {
           this.isEnterCourse = true
           const queryUserEnterCourseResult = res.data.result 
           queryUserEnterCourseResult.forEach(ele => {
-          this.queryCourseEnterIds.push(ele.cs_courseiid)
+            this.queryCourseEnterIds.push(ele.cs_courseiid)
           })
         } else {
             this.isEnterCourse = false
@@ -114,8 +115,12 @@ export default {
     myCourseControl(index) {
       this.whichMyCouese = index
       if(index === 0) {
+        this.deleteCourse = true
+        console.log('退出');
         this.queryUserEnterCourseInfoByIds()
       } else {
+        console.log('删除');
+        this.deleteCourse = true
         this.queryUserCourses()
       }
     },

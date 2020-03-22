@@ -16,15 +16,14 @@ export default {
       courseTitle: [
         { title: '首页', path: 'homePage'},
         { title: '资料', path: 'courseData',},
-        { title: '消息', path: 'courseMessage'},
-        { title: '通知', path: 'courseNotice'},
         { title: '管理', path: 'courseMange'},
+        { title: '通知', path: 'courseNotice'},
+        // { title: '管理', path: 'courseMange'},
       ]
     }
   },
   created() {
     document.title = this.$route.meta.title
-    console.log(this.$route);
   },
   methods: {
     

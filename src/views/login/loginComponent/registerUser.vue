@@ -112,10 +112,12 @@ export default {
           return this.$message.error('请填写完整')
         } else{
           registerUsers(this.registerForm).then(result => {
-            console.log(result);
             if(result.data.status === 203) {
               return this.$message.error('该手机号已被注册')
-            } else  return this.$message.success('注册账号成功') 
+            } else {
+              this.$router.push('/login')
+              return this.$message.success('注册账号成功')
+            }  
           })
         } 
       })

@@ -1,7 +1,13 @@
 <template>
   <div id="courseContent">
     <div class="courseItem" v-show="computedItemShow" :class="{isCheckedStyle: isChecked }" >
-      <course-item :courses-item='item' v-for="item in coursesInfo" :key="item._id" @click.native='itemClick(item, item._id, item.cteacheriid, item.cteacher)' class="hoverCss" target='_blank'></course-item>
+      <course-item :courses-item='item' v-for="item in coursesInfo" 
+        :key="item._id" 
+        @click.native='itemClick(item, item._id, item.cteacheriid, item.cteacher)' 
+        :is-delete-sing-out='deleteOrSingOut'
+        :is-delete-or-out='deleteOrOutConent'
+        class="hoverCss" target='_blank'>
+      </course-item>
     </div>
     <div v-show="!computedItemShow" class="noData">暂无数据</div>
   </div>
@@ -22,6 +28,14 @@ export default {
     isChecked: {
       type: Boolean,
       default: false
+    },
+    deleteOrSingOut: {
+      type: Boolean,
+      default: true
+    },
+    deleteOrOutConent: {
+      type: Boolean,
+      default: true
     }
   },
   computed: {
@@ -44,7 +58,6 @@ export default {
         iname: teacname,
         cciid: cid 
       } 
-      console.log(paramsData);
       const routeData = this.$router.resolve({
         name: 'teacher',
         params: paramsData
@@ -71,10 +84,8 @@ export default {
       const iname = this.getCurrentUserId().name
       if(cteciid === currentUserid) {
         this.toTeacherCourse(ciid, name)
-        console.log('老师课程界面');
       } else {
           this.toStuCourse(ciid, iname)
-          console.log('学生课程界面');
       }
     }
   },

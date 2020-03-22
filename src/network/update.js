@@ -15,3 +15,11 @@ export function upCourseTopicDown(data) {
     data
   })
 }
+
+export function updateUserPwd(data) {
+  return request({
+    url: '/user/updateUserPwd',
+    method: 'post',
+    data
+  })
+}

@@ -20,7 +20,7 @@ export default {
 <style>
   #courseHome {
     display: flex;
-    /* height: 700px; */
+    align-items:flex-start;
   }
 
   

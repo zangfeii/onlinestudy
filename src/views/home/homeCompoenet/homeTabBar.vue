@@ -1,5 +1,5 @@
 <template>
-  <div id="homeTabBar">
+  <div id="homeTabBar" v-show="showCurrent">
     <div class="tabRight">
       <div class="tabRightTitle"  v-for="(item, index) in   tabRightTitlesPath" :key="index"
         :class="{titleClickColor: item.path ===  titleIndexPath}" 
@@ -18,6 +18,12 @@
 <script>
 export default {
   name: 'homeTabBar',
+  props: {
+    showCurrent: {
+      type: Boolean,
+      default: true
+    }
+  },
   data() {
     return {
       tabRightTitlesPath: [
@@ -25,7 +31,8 @@ export default {
         {title: '首页', path: 'main', icon: 'el-icon-s-home'},
         {title: '收件箱', path: 'inbox', icon: 'el-icon-receiving'},
         {title: '消息', path: 'message', icon: 'el-icon-chat-dot-round'},
-        {title: '笔记', path: 'notebook', icon: 'el-icon-notebook-2'}
+        {title: '笔记', path: 'notebook', icon: 'el-icon-notebook-2'},
+        {title: '账号管理', path: 'mange', icon: 'el-icon-setting'}
       ],
       titleIndexPathData: '',
     }

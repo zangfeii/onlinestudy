@@ -1,28 +1,35 @@
 <template>
   <div id="upload">
-  
-      <el-upload class="avatar-uploader" action="http://127.0.0.1:3000/api/upload/uploadPic" :show-file-list="false"
-        :on-success="handleAvatarSuccess"
-        :before-upload="beforeAvatarUpload">
-        <img v-if="imageUrl" :src="imageUrl" class="avatar">
-        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-        </el-upload>
+    <el-upload class="avatar-uploader" action="http://127.0.0.1:3000/api/upload/uploadPic" :show-file-list="false"
+      :on-success="handleAvatarSuccess"
+      :before-upload="beforeAvatarUpload">
+      <p>{{upLoadName}}</p>
+    </el-upload>
+    
   </div>
 </template>
 
 <script>
 export default {
   name: 'upLoad',
+  props: {
+    upLoadName: {
+      type: String,
+      default: '默认名称'
+    }
+  },
   data() {
     return {
-      imageUrl:''
+      imageUrl:'',
+      imgq: ''
     }
   },
   methods: {
     handleAvatarSuccess (res, file) {
-      if (res.status === '0') {
-      this.$message.success(res.msg)
-      this.imageUrl = 'localhost:8000' + res.result.data
+      if (res.status === 200) {
+        this.$emit('basePicPath', res.result.data)
+        this.imageUrl = 'localhost:8000' + res.result.data
+      console.log( this.imageUrl);
       } else {
         this.$message.error(res.msg)
     }
@@ -37,7 +44,7 @@ export default {
         this.$message.error('上传头像图片大小不能超过 2MB!')
       }
       return isJPG && isLt2M
-    }
+    },
   },
 }
 </script>

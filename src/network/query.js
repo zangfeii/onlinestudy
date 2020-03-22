@@ -72,3 +72,19 @@ export function queryUsersListsByIds(data) {
     data
   })
 }
+
+export function queryUserInfoById(data) {
+  return request({
+    url: '/user/queryUserInfoById',
+    method: 'post',
+    data
+  })
+}
+
+export function updateUserPic(data) {
+  return request({
+    url: '/user/updateUserPic',
+    method: 'post',
+    data
+  })
+}
