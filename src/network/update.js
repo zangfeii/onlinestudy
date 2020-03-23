@@ -31,3 +31,19 @@ export function updateCourseCoverImg(data) {
     data
   })
 }
+
+export function updateCourseDesc(data) {
+  return request({
+    url: "/course/updateCourseDesc",
+    method: 'post',
+    data
+  })
+}
+
+export function updateCourseStatus(data) {
+  return request({
+    url: '/course/updateCourseStatus',
+    method: 'post',
+    data
+  })
+}

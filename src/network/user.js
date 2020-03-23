@@ -8,6 +8,14 @@ export function registerUsers(data) {
   })
 }
 
+export function addCurseStuByTec(data) {
+  return request({
+    url: '/user/tecAddCourseStu',
+    method: 'post',
+    data
+  })
+}
+
 export function userLogin(data) {
   return request({
     url: '/user/login',

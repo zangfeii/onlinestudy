@@ -3,8 +3,8 @@
     <el-input placeholder="新建话题" v-model="inputTopic.title" @click.native="inputClick"></el-input>
     <div class="inputTextArea" v-if="showInputTextArea">
       <el-input type="textarea" :rows="8" placeholder="请输入内容" v-model="inputTopic.textarea"></el-input>
-      <el-button type="success" class="topicBtn" @click="sureAddTopic">确定</el-button>
-      <el-button class="topicBtn" @click="cancelBtnClick">取消</el-button>
+      <el-button type="success" class="topicBtn" @click="sureAddTopic" size="mini">确定</el-button>
+      <el-button class="topicBtn" @click="cancelBtnClick" type="primary" size="mini">取消</el-button>
     </div>
     <topic-content :topic-data='courseTopicData'  
       @deleteContentClick='deleteCourseTopic' 

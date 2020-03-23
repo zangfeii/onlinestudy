@@ -2,7 +2,7 @@
   <div id="courseList">
     <div class="catalogBtn">
       <span>目录</span>
-      <el-button type="primary" icon="el-icon-edit" class="updateBtn" @click="addChapter">添加新的一章</el-button>
+      <el-button type="primary" icon="el-icon-edit" class="updateBtn" size="small" @click="addChapter">添加新的一章</el-button>
     </div>
     <!-- 课程目录 -->
     <el-tree :data="data" node-key="id" default-expand-all :expand-on-click-node="false">

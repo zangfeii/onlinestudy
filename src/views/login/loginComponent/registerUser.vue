@@ -62,7 +62,7 @@ export default {
       } else cd();
     })
     //验证手机号的合法性
-    var validatorMobile = ((rule, value,cd) => {
+    var validatorMobile = ((rule, value, cd) => {
       const regMoblie = /^1[34578]\d{9}$$/
       if(regMoblie.test(value)){
         return cd()

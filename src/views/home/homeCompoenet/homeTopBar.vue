@@ -110,19 +110,19 @@ export default {
      
     //用户进入课程
     lastEnterCurse(enterCourerParamsData) {
-     stuEnterCourse(enterCourerParamsData).then(res => {
+       if(this.queriedCourse[0].cstatus) {
+          stuEnterCourse(enterCourerParamsData).then(res => {
           if(res.data.status === 200) {
-            if(this.queriedCourse[0].cstatus === 1) {
-              this.$bus.$emit('getEnterCourses')
-              this.$message.success('成功添加该课程')
-              this.enterCoursedialogVisible = false
-            } else {
-              return this.$message.error('该课程已经结束')
-            }
+            this.$bus.$emit('getEnterCourses')
+            this.enterCoursedialogVisible = false
+            this.$message.success('成功添加该课程')
           } else {
-              this.$message.error('添该加课程失败')
+            this.$message.error('添该加课程失败')
           }
         })
+        } else {
+            return this.$message.error('暂时不能进入, 请联系老师')
+          }
     }, 
     //判断是否有该邀请码的课程
     isInCodeCourse() {
@@ -139,9 +139,12 @@ export default {
       if(this.queriedCourse[0].cteacheriid === this.iid) {
         return  this.$message.error('抱歉您不能进入自己创建的课程学习')
       } else {
-          beforeEnterCuorseQuery({useIid:courseStuParams.cs_stuiid, courseId: courseStuParams.cs_courseiid}).then(res => {
-        if(res.data.status === 210) {
-          this.$message.error('您已经进入该课程学习,不能重复添加')
+          beforeEnterCuorseQuery({
+            useIid:courseStuParams.cs_stuiid, 
+            courseId: courseStuParams.cs_courseiid
+          }).then(res => {
+            if(res.data.status === 210) {
+              return this.$message.error('您已经进入该课程学习,不能重复添加')
         } else {
             this.lastEnterCurse(courseStuParams)
           }
@@ -150,8 +153,6 @@ export default {
     },
     successAddCourse() {
        const isIncodeCouseResult = this.isInCodeCourse()
-       console.log(this.isInCodeCourse());
-       console.log(isIncodeCouseResult);
        if(isIncodeCouseResult) {
           this.addCourseLast()
        } else {
