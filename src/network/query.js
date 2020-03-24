@@ -16,6 +16,14 @@ export function queryCourseByInCode(data) {
   })
 }
 
+export function queryCourseName(data) {
+  return request({
+    url: '/queryCourse/queryCurseName',
+    method: 'post',
+    data
+  })
+}
+
 export function beforeEnterCuorseQuery(data) {
   return request({
     url: '/courseStu/beforeEnterQuery',

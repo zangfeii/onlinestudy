@@ -80,7 +80,7 @@ const routes = [{
     component: course
   }, {
     path: 'inbox',
-    component: InBox
+    component: InBox,
   }, {
     path: 'message',
     component: message

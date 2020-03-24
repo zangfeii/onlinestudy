@@ -11,7 +11,7 @@ export default {
 </script>
 
 <style>
-   @import url('./assets/css/globa.css');
+  @import url('./assets/css/globa.css');
 </style>
 <style lang="sass" scoped>
 

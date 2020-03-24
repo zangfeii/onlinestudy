@@ -173,14 +173,19 @@ export default {
     tecAddStu() {
       this.tecAdddStudialogVisible = true
     },
+    //添加学生并给学生发送通知
+  
     addCurrentCourseStu() {
       addCurseStuByTec({
         stuName: this.stuRuleForm.name,
         mobile: this.stuRuleForm.mobile,
         courseiid: this.mangeCourseInfo._id,
-        teciid: this.mangeCourseInfo.cteacheriid
+        teciid: this.mangeCourseInfo.cteacheriid,
+        coursename: this.mangeCourseInfo.ctitle
       }).then(res => {
         if(res.data.status === 200) {
+          this.tecAdddStudialogVisible = false
+          this.$message.success('添加该学生成功')
           this.$parent.querStuList()
         } else {
           this.$message.error(res.data.msg)

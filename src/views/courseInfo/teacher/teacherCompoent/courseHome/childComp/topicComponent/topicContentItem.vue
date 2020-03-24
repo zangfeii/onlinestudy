@@ -10,7 +10,7 @@
           <img :src="courseTopicItemData.tp_topicCreaterPic" class="topicUserImg">
           <div>
             <p class="topicUserName">{{courseTopicItemData.tp_topicCreateName}}</p>
-            <p class="topicCreateTime">{{courseTopicItemData.tp_createTime.substr(0, 10)}}</p>
+            <p class="topicCreateTime">{{courseTopicItemData.tp_createTime}}</p>
           </div>
         </div>
         <div>
