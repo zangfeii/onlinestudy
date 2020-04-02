@@ -1,7 +1,7 @@
 <template>
   <div id="myInBox">
     <a class="writeinbox">写站内信函</a>
-    <inbox-bread ref="inboxBreadRef" @backNoticelist='backList'></inbox-bread>
+    <inbox-bread ref="inboxBreadRef" :bread-titles='twoTitles' @backNoticelist='backList'></inbox-bread>
     <inbox-item-content ref='inboxItemConRef' @noticeContnetClick='clickBread'></inbox-item-content>
   </div>
 </template>
@@ -12,6 +12,11 @@ import inboxBread from './inboxBread/inboxBread'
 export default {
   name: 'InBox',
   components: { inboxItemContent, inboxBread },
+  data () {
+    return {
+      twoTitles: ['首页', '详情']
+    }
+  },
   methods: {
     clickBread() {
       this.$refs.inboxBreadRef.addB()
@@ -26,7 +31,6 @@ export default {
 <style>
   #myInBox {
     margin-top: 10px;
-    /* width: 700px; */
     margin-left: 20px;
   }
 

@@ -1,11 +1,11 @@
 <template>
   <div id="inboxBread">
     <div>
-      <span> <b>首页</b> / </span>
-      <span :class="{addB: isAddB}">详情</span>
+      <span> <b>{{breadTitles[0]}}</b> / </span>
+      <span :class="{addB: isAddB}">{{breadTitles[1]}}</span>
     </div>
     <div>
-      <a class="backa" @click="backNoticesList">{{bacakStr}}返回</a>
+      <a class="backa" v-if="isHaveBack" @click="backNoticesList">{{bacakStr}}返回</a>
     </div>
   </div>
 </template>
@@ -13,6 +13,18 @@
 <script>
 export default {
   name: 'inboxBread',
+  props: {
+    isHaveBack: {
+      type: Boolean,
+      default: true
+    },
+    breadTitles: {
+      type: Array,
+      default() {
+        return []
+      }
+    }
+  },
   data() {
     return {
       isAddB: false,

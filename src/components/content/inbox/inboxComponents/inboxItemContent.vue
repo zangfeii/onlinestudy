@@ -11,7 +11,7 @@
     </div>
    <div class='nonotice'  v-if="!notices.length">暂无信息</div>
   </div>                  
-</template>
+</template>s
 
 <script>
 import inboxItem from './inboxItem'
@@ -48,7 +48,7 @@ export default {
        this.isShowNoticeList = true
     },
     clickNotice(item) {
-      console.log(item.n_sendTtle);
+      console.log(item);
       this.detailsNoticeInfo = item
       this.isShowNoticeList = false
       this.$emit('noticeContnetClick')

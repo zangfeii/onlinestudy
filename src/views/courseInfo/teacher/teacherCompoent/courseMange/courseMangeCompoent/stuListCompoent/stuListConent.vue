@@ -1,6 +1,6 @@
 <template>
   <div id="stuListCon">
-    <h5 class="stuNums">学生人数:{{ stuListConent.length}}</h5>
+    <h5 class="stuNums">学生人数 : {{ stuListConent.length}}</h5>
     <div>
       <stu-list-item :stu-list-item='item' v-for="(item, index) in stuListConent"
         :key="index">

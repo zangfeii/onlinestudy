@@ -30,7 +30,6 @@ export default {
   methods: {
     //获取当前课程学生部分信息
     querStuList() {
-      console.log(this.courseTecheriid);
       queryCourrentCourseStus({
         courseiid: this.courseTecheriid._id,
         teacheriid: this.courseTecheriid.cteacheriid
@@ -40,6 +39,7 @@ export default {
             ids: res.data.result
           }).then(res => {
             if(res.data.status === 200) {
+              console.log(res.data);
               this.usersList = res.data.result
             }
           })

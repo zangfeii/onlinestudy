@@ -85,7 +85,7 @@ export default {
       if(cteciid === currentUserid) {
         this.toTeacherCourse(ciid, name)
       } else {
-          this.toStuCourse(ciid, iname)
+        this.toStuCourse(ciid, iname)
       }
     }
   },

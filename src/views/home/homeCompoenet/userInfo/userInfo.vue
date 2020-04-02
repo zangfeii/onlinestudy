@@ -113,7 +113,7 @@ export default {
       })
     }, 
     picBasePath(path) {
-      const pathPic = 'http://127.0.0.1:3000/public/img/user/'+ path
+      const pathPic = 'http://127.0.0.1:3000/public/img/'+ path
       updateUserPic({
         useriid: this.$route.params.iid,
         path: pathPic

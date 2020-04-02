@@ -29,6 +29,8 @@ const courseData = () =>
   import ('../views/courseInfo/teacher/teacherCompoent/courseData/courseData.vue')
 const courseMange = () =>
   import ('../views/courseInfo/teacher/teacherCompoent/courseMange/courseMange.vue')
+const leaveMessage = () =>
+  import ('../views/courseInfo/teacher/teacherCompoent/courseMange/courseMangeCompoent/stuListCompoent/stuLeaveMessage/leaveMeaage.vue')
 const courseNotice = () =>
   import ('../views/courseInfo/teacher/teacherCompoent/courseNotice/courseNotice.vue')
   // const courseMange = () =>
@@ -117,7 +119,16 @@ const routes = [{
       meta: {
         title: '管理'
       },
-    }, {
+    },
+    {
+      path: 'chatwit&stuiid=:siid&incourse=:ciid',
+      component: leaveMessage,
+      name: 'leaveMessage',
+      meta: {
+        title: '留言'
+      }
+    },
+    {
       path: 'courseNotice',
       name: 'courseNotice',
       component: courseNotice,
