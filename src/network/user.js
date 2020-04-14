@@ -77,6 +77,38 @@ export function deleteCourseOneTopic(data) {
     data
   })
 }
+
+export function getAllUserSomeInfo(data) {
+  return request({
+    url: '/user/getAllUserSomeInfo',
+    method: 'post',
+    data
+  })
+}
+
+export function setUserStatus(data) {
+  return request({
+    url: '/user/setUserStatus',
+    method: 'post',
+    data
+  })
+}
+
+export function setUserRole(data) {
+  return request({
+    url: '/user/setUserRole',
+    method: 'post',
+    data
+  })
+}
+
+export function searchUser(data) {
+  return request({
+    url: '/user/queryUuserByp',
+    method: 'post',
+    data
+  })
+}
 export class oneCourseStuInfo {
   constructor(teacher, stu) {
     this.cs_title = teacher.ctitle

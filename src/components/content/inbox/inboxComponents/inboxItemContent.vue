@@ -17,7 +17,7 @@
 import inboxItem from './inboxItem'
 import inboxDetails from './inboxDetails/inboxDetails'
 
-import { getNotices } from '../../../../network/notice'
+import { getNotices, getAdminNotice } from '../../../../network/notice'
 export default {
   name: 'inboxItemContent',
   components: { inboxItem, inboxDetails },
@@ -29,26 +29,47 @@ export default {
     }
   },
   created() {
-    this.getNotice()
+    this.whichNotice()
+    this.$bus.$on('getAdminNotices', () => {
+      this.getAdminNotices()
+    })
   },
   methods: {
+    getAdminNotices() {
+      getAdminNotice({
+        id: JSON.parse(window.sessionStorage.getItem('user')).user_id
+      }).then(res => {
+        if(res.data.status === 200) {
+          console.log(res.data);
+          this.notices = res.data.result
+        } else {
+          this.notices = []
+        }
+      })
+    },
     getNotice() {
       getNotices({
-      useriid: this.$route.params.iid
-    }).then(res => {
-      if(res.data.status === 200) {
-        this.notices = res.data.notices
-        console.log(res.data.notices);
-      } else { 
-        this.notices = []
+        useriid: this.$route.params.iid
+      }).then(res => {
+        if(res.data.status === 200) {
+          this.notices = res.data.notices
+        } else { 
+          this.notices = []
+        }
+      })
+    },
+    whichNotice() {
+      if(!this.$route.params.iid) {
+        this.getAdminNotices()
+      } else {
+        this. getNotice()
       }
-    })
     },
     noticesList() {
-       this.isShowNoticeList = true
+      this.whichNotice()
+      this.isShowNoticeList = true
     },
     clickNotice(item) {
-      console.log(item);
       this.detailsNoticeInfo = item
       this.isShowNoticeList = false
       this.$emit('noticeContnetClick')

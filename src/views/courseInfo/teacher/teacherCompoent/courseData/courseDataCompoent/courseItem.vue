@@ -11,12 +11,13 @@
       <!-- <a :href="oneRousesInfo.datas[0].path" @click="addDownNums(oneRousesInfo._id)"><i class="el-icon-download" title="下载"></i></a> -->
       <!-- <a href="javascript:void(0)" @click="addDownNums(oneRousesInfo._id, oneRousesInfo.datas[0].path)"><i class="el-icon-download" title="下载"></i></a> -->
       <a href="javascript:void(0)" @click="addDownNums(oneRousesInfo)"><i class="el-icon-download" title="下载"></i></a>
+      <a href="javascript:void(0)" @click="deleteRourse(oneRousesInfo._id)" v-if="isDelete"><i class="el-icon-delete" title="删除"></i></a>
     </div>
   </div>
 </template>
 
 <script>
-import { addDownNums } from '../../../../../../network/upStudyData'
+import { addDownNums, deleteRourse } from '../../../../../../network/upStudyData'
 export default {
   name: 'courseItem',
   props: {
@@ -25,6 +26,10 @@ export default {
       default() {
         return {}
       }
+    },
+    isDelete: {
+      type: Boolean,
+      default: true
     }
   },
   methods: {
@@ -40,6 +45,25 @@ export default {
           this.$message.error('下载失败')
         }
       })
+    },
+    deleteRourse(rourseiid) {
+      this.$confirm('此操作将永久删除该文件, 是否继续?', '提示',{
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        deleteRourse({
+          riid: rourseiid
+        }).then(res => {
+          if(res.data.status === 200) {
+            this.$parent.$parent.getCourseRourss()
+          } else {
+            this.$message.error('删除该资源失败')
+          }
+        })
+      }).catch(() => {
+          this.$message.info('已经取消删除')
+        })
     }
   },
 }

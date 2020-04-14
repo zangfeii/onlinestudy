@@ -6,15 +6,18 @@
         @click.native='itemClick(item, item._id, item.cteacheriid, item.cteacher)' 
         :is-delete-sing-out='deleteOrSingOut'
         :is-delete-or-out='deleteOrOutConent'
+        :is-mange-courses='isMangeCourses'
         class="hoverCss" target='_blank'>
       </course-item>
     </div>
-    <div v-show="!computedItemShow" class="noData">暂无数据</div>
+    <div v-show="!computedItemShow" class="noCourseData">暂无课程</div>
   </div>
 </template>
 
 <script>
 import courseItem from './courseItem'
+
+import {　 beforeEnterCuorseQuery　} from '../../../../network/query'
 export default {
   name: 'courseContent',
   components: { courseItem },
@@ -36,6 +39,15 @@ export default {
     deleteOrOutConent: {
       type: Boolean,
       default: true
+    },
+    isMangeCourses: {
+      type: Boolean,
+      default: false
+    }
+  },
+  data() {
+    return {
+      ishaventer: false
     }
   },
   computed: {
@@ -77,16 +89,27 @@ export default {
       })
       window.open( stuRoute.href, '_blank')
     },
+    //查询当前用户是否已经添加了该课程
+    isHaveEnterCourse(userid, courseid, name) {
+       beforeEnterCuorseQuery({ useIid: userid, courseId: courseid }).then(res => {
+        if(res.data.status === 210) {
+          this.toStuCourse(courseid, name)
+        } else {
+          // this.$message.error('请先先进入该课程')
+          return
+        }
+      })
+    },
     itemClick(item, ciid, cteciid, name) {
-      // const routeData = this.$router.resolve(path)
       window.sessionStorage.setItem('currentCourseInfo', JSON.stringify(item))
       const currentUserid = this.getCurrentUserId().user_id
       const iname = this.getCurrentUserId().name
-      if(cteciid === currentUserid) {
-        this.toTeacherCourse(ciid, name)
-      } else {
-        this.toStuCourse(ciid, iname)
-      }
+       if(cteciid === currentUserid) {
+         this.toTeacherCourse(ciid, name)
+       } else {
+         this.isHaveEnterCourse(currentUserid, ciid, iname)
+        //  this.toStuCourse(ciid, iname)
+       }
     }
   },
 }
@@ -100,9 +123,14 @@ export default {
     justify-content: first baseline;
   }
 
-  .noData {
-    width: 870px;
-    height: 380px;
+  .noCourseData {
+    width: 100%;
+    height: 120px;
+    line-height: 120px;
+    text-align: center;
+    color: #9999;
+    font-weight: bold;
+
   }
 
   .isCheckedStyle {

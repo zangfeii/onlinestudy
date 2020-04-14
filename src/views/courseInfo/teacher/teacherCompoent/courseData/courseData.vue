@@ -22,7 +22,7 @@
       <div v-if="!upSuccessInfo.length" class="upNotices">注: 每次只能上传一个</div>
       <span slot="footer" class="dialogfooter">
         <up-data @getDataInfo='getUpdataInfo'></up-data>
-        <el-button type="primary" size='mini' class="sureUpBtn" @click="upDataDialogVisible = false">完  成</el-button>
+        <el-button type="primary" size='mini' class="sureUpBtn" @click="finishUpRourse">完  成</el-button>
       </span>
     </el-dialog>
   </div>
@@ -89,8 +89,11 @@ export default {
           this.getRourseInfo = res.data.data
         }
       })
+    },
+    finishUpRourse() {
+      this.upDataDialogVisible = false
+      this.getCourseRourss()
     }
-     
   },
 }
 </script>

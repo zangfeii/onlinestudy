@@ -32,7 +32,7 @@ import upLoad from '../../common/upLoad'
 import courseContent from './homeCourseCompoent/courseContent'
 
 import { getCotranct } from '../../../network/user'
-import { queryCoursesById, getUserEnterCourseIdds, getUserEnterCoueses } from '../../../network/query'
+import { queryCoursesById, getUserEnterCourseIdds, getUserEnterCoueses, queryUsersListsByIds } from '../../../network/query'
  
 export default {
   name: 'course',
@@ -134,17 +134,22 @@ export default {
     },
     //用户创建课程
     addCourse() {
-      const UserRole = JSON.parse(window.sessionStorage.getItem('user')).role
-      if(UserRole === 1) {
-         getCotranct().then(res => {
-          this.connectQQ = res.data
-          this.addCourseDialogVisible = true
-          return
+      const id = JSON.parse(window.sessionStorage.getItem('user')).user_id
+      queryUsersListsByIds({ids: id}).then(res => {
+        console.log();
+        if(res.data.status === 200) {
+          if(res.data.result[0].role === 1) {
+            getCotranct().then(res => {
+            this.connectQQ = res.data
+            this.addCourseDialogVisible = true
+            return
         })
-      } else {
-        this.$router.push('/createCourse')
-      }
-     }
+        } else {
+            this.$router.push('/createCourse')
+         }
+        }
+      })
+    }
   },
 }
 </script>
@@ -192,7 +197,7 @@ export default {
   }
 
   .courseContentStyle {
-    margin-left: 30px;
+    margin-left: 60px;
     margin-top: 10px;
   }
 

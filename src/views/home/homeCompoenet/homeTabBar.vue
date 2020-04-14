@@ -1,7 +1,8 @@
 <template>
   <div id="homeTabBar" v-show="showCurrent">
     <div class="tabRight">
-      <div class="tabRightTitle"  v-for="(item, index) in   tabRightTitlesPath" :key="index"
+      <!-- <div class="tabRightTitle"  v-for="(item, index) in   tabRightTitlesPath" :key="index" -->
+      <div class="tabRightTitle"  v-for="(item, index) in   tabBarTitles" :key="index"
         :class="{titleClickColor: item.path ===  titleIndexPath}" 
         @click="rightTitleClick(index, item.path)">
        <i :class="item.icon"></i> <a class="tabRightTitleA" >{{item.title}}</a>
@@ -22,18 +23,24 @@ export default {
     showCurrent: {
       type: Boolean,
       default: true
+    },
+    tabBarTitles: {
+      type: Array,
+      default() {
+        return []
+      }
     }
   },
   data() {
     return {
-      tabRightTitlesPath: [
-        {title: '课程', path: 'course', icon: 'el-icon-tickets'},
-        {title: '首页', path: 'main', icon: 'el-icon-s-home'},
-        {title: '收件箱', path: 'inbox', icon: 'el-icon-receiving'},
-        {title: '消息', path: 'message', icon: 'el-icon-chat-dot-round'},
-        {title: '笔记', path: 'notebook', icon: 'el-icon-notebook-2'},
-        {title: '账号管理', path: 'mange', icon: 'el-icon-setting'}
-      ],
+      // tabRightTitlesPath: [
+      //   {title: '课程', path: 'course', icon: 'el-icon-tickets'},
+      //   {title: '首页', path: 'main', icon: 'el-icon-s-home'},
+      //   {title: '收件箱', path: 'inbox', icon: 'el-icon-receiving'},
+      //   {title: '消息', path: 'message', icon: 'el-icon-chat-dot-round'},
+      //   {title: '笔记', path: 'notebook', icon: 'el-icon-notebook-2'},
+      //   {title: '账号管理', path: 'mange', icon: 'el-icon-setting'}
+      // ],
       titleIndexPathData: '',
     }
   },
@@ -51,13 +58,13 @@ export default {
     rightTitleClick(index, path) {
       this.titleIndexPathData = path
       window.sessionStorage.setItem('tabTitlePath', path)
-      this.$router.push(this.tabRightTitlesPath[index].path)
+      this.$router.push(this.tabBarTitles[index].path)
     },
     defaulPath() {
       if(!this.titleIndexPathData) {
-        this.titleIndexPathData = window.sessionStorage.getItem('tabTitlePath') || this.tabRightTitlesPath[0].path
+        this.titleIndexPathData = window.sessionStorage.getItem('tabTitlePath') || this.tabBarTitles[0].path
       } else {
-        this.titleIndexPathData = this.tabRightTitlesPath[0].path
+        this.titleIndexPathData = this.tabBarTitles[0].path
       }
     }
   }, 
@@ -72,15 +79,12 @@ export default {
 <style>
   #homeTabBar {
     width: 1200px;
-    height: 380px;
     display: flex;
-    margin: 10px auto;
+    align-items:flex-start;
   }
 
   .tabRight {
-    width: 200px;
-    height: 300px;
-    border-radius: 4px;
+    border-radius: 8px;
     background: #272C33;
     color: white;
     display: flex;
@@ -91,7 +95,7 @@ export default {
   }
 
   .tabRightTitle {
-    width: 200px;
+    padding: 10px 40px 0;
     height: 50px;
     font-size: 20px;
     text-align: center;

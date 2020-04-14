@@ -6,11 +6,11 @@
     </div>
     <!-- 课程目录 -->
     <el-tree :data="data" node-key="id" default-expand-all :expand-on-click-node="false">
-       <span class="custom-tree-node" slot-scope="{ node, data }">
+       <span class="custom-tree-node" target='_blank'  slot-scope="{ node, data }" @click="clickChapterDetails(data)">
         <span>{{ node.label }}</span>
-        <span >
-          <el-tag size='mini' type="success"  @click="append(data)"  class="hoverUpremoveBtn" v-show="data.children">添加子目录</el-tag>
-          <el-tag type="warning" size='mini' @click="remove(node, data)" class="hoverUpremoveBtn deleteBTn">删除</el-tag>
+        <span>
+          <el-tag size='mini' type="success"  @click.stop="append(data)"  class="hoverUpremoveBtn" v-show="data.children">添加子目录</el-tag>
+          <el-tag type="warning" size='mini' @click.stop="remove(node, data)" class="hoverUpremovideBtn deleteBTn">删除</el-tag>
         </span>
       </span>
     </el-tree>
@@ -58,6 +58,7 @@ export default {
       //添加的节
       inputChaptedTitle: {
         id: 0,
+        iid: '',
         label: ''
       },
       chapterTitleTempData: {},
@@ -72,13 +73,14 @@ export default {
       if(!newVal) {
         this.inputChaptedTitle = {
         id: 0,
+        iid: '',
         label: '',
        }
       }
     },
-     chaptedTitleDialogVisible(newVal, oldVal) {
-       if(!newVal) {
-         this.inputChapter = {
+    chaptedTitleDialogVisible(newVal, oldVal) {
+      if(!newVal) {
+        this.inputChapter = {
           id: 0,
           label: '',
           children: []
@@ -86,7 +88,6 @@ export default {
        }
      },
   },
- 
   methods: {
     //获取当前课程信息
     getCourAndTeacherIndo() {
@@ -152,10 +153,13 @@ export default {
   addChapter() {
     this.chaptedTitleDialogVisible = true
   },
+  // 生成课程章节唯一的标识iid
+  setChapteriid() {
+    return Number(Math.random().toString().substr(3, 3) + Date.now()).toString(36)
+  },
   //确定添加新的一章
   suerAddChapterTitle() {
     this.inputChapter.id = this.ids + 1
-    console.log(this.inputChapter.id);
     this.data.push(this.inputChapter) 
     this.addToDb()
     this.queryCourseChaptersTttles()
@@ -169,8 +173,8 @@ export default {
   //确定添加新的小节-
   sureBtnAddChapter() {
     this.inputChaptedTitle.id = this.chapterTitleTempData.children.length + 1
+    this.inputChaptedTitle.iid = this.setChapteriid()
     this.chapterTitleTempData.children.push(this.inputChaptedTitle)
-    console.log(this.data);
     this.addToDb()
     this.chaptedNameDialogVisible = false
   },
@@ -201,7 +205,14 @@ export default {
             <el-button size="mini" type="text" on-click={ () => this.remove(node, data) }>删除</el-button>
           </span>
           </span>);
-      }
+      },
+    clickChapterDetails(data) {
+      window.sessionStorage.setItem('chapter', JSON.stringify(data))
+      let chapterroute = this.$router.resolve({
+        name: 'courseChapterContent',
+      })
+      window.open( chapterroute.route.path, '_blank')
+    }
   },
 }
 </script>

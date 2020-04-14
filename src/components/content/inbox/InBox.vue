@@ -1,6 +1,5 @@
 <template>
   <div id="myInBox">
-    <a class="writeinbox">写站内信函</a>
     <inbox-bread ref="inboxBreadRef" :bread-titles='twoTitles' @backNoticelist='backList'></inbox-bread>
     <inbox-item-content ref='inboxItemConRef' @noticeContnetClick='clickBread'></inbox-item-content>
   </div>
@@ -34,17 +33,4 @@ export default {
     margin-left: 20px;
   }
 
-  .writeinbox {
-    width: 60px;
-    text-align: center;
-    color: white;
-    padding: 7px;
-    border-radius: 20px;
-    background: #00A9FF;
-  }
-
-  .writeinbox:hover {
-    color: white;
-    background: #82B7FF;
-  }
 </style>

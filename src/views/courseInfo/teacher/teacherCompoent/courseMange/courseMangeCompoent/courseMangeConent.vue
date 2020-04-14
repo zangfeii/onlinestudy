@@ -27,8 +27,8 @@
      <p>课程:</p>
      <span class="courseTwoItem">{{mangeCourseInfo.ctitle}}</span>
    </div>
-   <div class="courseDesc courItem">
-     <p>课程简介:</p>
+   <div class="MangeCourseDesc courItem">
+     <span>课程简介:</span>
      <div class="updateDescInputBtn">
        <p v-if="isUpdate" title="修改简介" @click="updateBtn" class="courseTwoItem desc">{{mangeCourseInfo.cdesc}}</p>
        <el-input type="textarea" class="courseTwoItem descUpdatwInput" :rows="6"  
@@ -211,10 +211,6 @@ export default {
     height: 600px;
   }
 
-  h3 {
-    /* margin-top: 20px; */
-  }
-
   .courseMageLine {
     height: 1.5px;
     width: 100%;
@@ -285,4 +281,8 @@ export default {
      margin-top: 5px;
      margin-left: 20px;
   } 
+
+  .courseDesc {
+    
+  }
 </style>

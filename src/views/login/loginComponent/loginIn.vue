@@ -64,9 +64,8 @@ export default {
           return this.$message.error("请安要求填写")
         } 
         userLogin(this.loginForm).then((res => {
-        console.log(res);
         if(res.data.status === 200) {
-          if(res.data.userInfo.status === 1) {
+          if(res.data.userInfo.status === 1 &&  res.data.userInfo.role <= 2) {
           this.paramsform.iid = res.data.userInfo.user_id
           this.paramsform.iname = res.data.userInfo.name
           // 在sessionStorage中储存token
@@ -74,21 +73,27 @@ export default {
           // 在sessionStorage中储存头像图片
           window.sessionStorage.setItem('headpic', res.data.userInfo.hpic)
           //保存用户信息
+          delete res.data.userInfo.role
           window.sessionStorage.setItem('user', JSON.stringify(res.data.userInfo))
           this.$router.push({
             name: 'home',
             params:  this.paramsform
           })
           return this.$message.success("登陆成功")
-          } else {
-            getCotranct().then(res => {
-              this.connectionQQ = res.data
-              this.remindDialogVisible = true
-              return
-            })
-          }
+          } else if(res.data.userInfo.role === 3) {
+            window.sessionStorage.setItem('token', res.data.token)
+            delete res.data.userInfo.role
+            window.sessionStorage.setItem('user', JSON.stringify(res.data.userInfo))
+            this.$router.push('/adminhome')
+           } else {
+              getCotranct().then(res => {
+                this.connectionQQ = res.data
+                this.remindDialogVisible = true
+                return
+              })
+            }
         } else {
-          return this.$message.error("登陆失败,请检查账号密码")
+           return this.$message.error("登陆失败,请检查账号密码")
         }
         }))
       })

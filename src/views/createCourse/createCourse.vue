@@ -4,7 +4,7 @@
       <div class="createCourseTitle">新建课程</div>
     <div class="createCourseMain">
     
-      <el-form :model="addCreateCourseRuleForm" :rules="rules" ref="addCreateCourseRuleForm" label-width="100px" class="addCourseForm">
+      <el-form :model="addCreateCourseRuleForm" :rules="rules" ref="addCreateCourseRuleFormRef" label-width="100px" class="addCourseForm">
         <el-form-item label="课程 :" prop="classTitle">
           <el-input v-model="addCreateCourseRuleForm.classTitle"></el-input>
         </el-form-item>
@@ -47,7 +47,8 @@ export default {
            {min: 2, message: '课程名称最小两个文字' ,trigger: 'blur'},
          ],
          classDesc: [
-           {required: true, message: '请简单说明下课程', trigger: 'blur'}
+           {required: true, message: '请简单说明下课程', trigger: 'blur'},
+           {min: 2, message: '课程简介最小两个文字' ,trigger: 'blur'}
          ]
       }
     }
@@ -55,18 +56,20 @@ export default {
   methods: {
     createCourseSure() {
       this.addCreateCourseRuleForm.cincode = getInvitedCode()
-      this.$refs.addCreateCourseRuleForm.validate( valid => {
+      this.$refs.addCreateCourseRuleFormRef.validate( valid => {
+        console.log(valid);
         if(!valid) {
-          return this.$message.error('请填写完整')
-        }
-        createCoursing(this.addCreateCourseRuleForm).then(res => {
+          this.$message.error('请填写完整')
+        } else {
+          createCoursing(this.addCreateCourseRuleForm).then(res => {
           if(res.data.status === 200) {
             this.$router.back()
             return this.$message.success('创建课程成功')
-        } else {
+          } else {
             return this.$message.error('创建课程失败')
-         }
-        })
+           }
+         })
+        }
       })
     },
     createCourseBtnBack() {

@@ -8,6 +8,30 @@ export function queryCoursesById(data) {
   })
 }
 
+export function getAllCourses(data) {
+  return request({
+    url: '/queryCourse/getAllCourses',
+    method: 'post',
+    data
+  })
+}
+
+export function probiteCouse(data) {
+  return request({
+    url: '/queryCourse/prohibteCourse',
+    method: 'post',
+    data
+  })
+}
+
+export function queryCourse(data) {
+  return request({
+    url: '/queryCourse/queryCourseByp',
+    method: 'post',
+    data
+  })
+}
+
 export function queryCourseByInCode(data) {
   return request({
     url: '/queryCourse/queryCourseByinCode',

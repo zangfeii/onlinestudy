@@ -55,3 +55,27 @@ export function getCourseStuGetNotices(data) {
     data
   })
 }
+
+export function sendCourseWring(data) {
+  return request({
+    url: '/notice/sendWaringCourseNotice',
+    method: 'post',
+    data
+  })
+}
+
+export function getAdminNotice(data) {
+  return request({
+    url: '/notice/getAdminNotices',
+    method: 'post',
+    data
+  })
+}
+
+export function sendSysNotice(data) {
+  return request({
+    url: '/notice/sendSysNotice',
+    method: 'post',
+    data
+  })
+}

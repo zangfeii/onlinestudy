@@ -2,7 +2,6 @@
   <div id="myMessageContnet">
     <div v-if="whenDetailsNone">
       <div class="firstSendMsgs" v-if="isSnedMsgs">
-        <h3>发送的消息</h3>
         <inbox-item :is-inbox='false' :inbox-item='item' 
           v-for="(item, index) in myMessages" :key="index"
           @click.native="firstSendMsgsClick(item)">
@@ -13,7 +12,6 @@
       <!-- <div class="getMsgs" v-if="!isSnedMsgs"> -->
         <div v-if="whenDetailsNone">
           <div class="getMsgs" v-if="isGetMsgs">
-          <h3>接受的消息</h3>
             <inbox-item :is-inbox='false' :inbox-item='item' 
               v-for="(item, index) in myMessages" :key="index"
               @click.native="getMsgsClick(item)">
@@ -86,10 +84,13 @@ export default {
     }
   },
   methods: {
+    noneDetails() {
+      Object.assign(this.$data, this.$options.data())
+    },
     firstSendMsgsClick(item) {
       this.$emit('clickSendMSgs')
       this.whenDetailsNone  = false
-      this.firstSendMsgsHome.push(item)  
+      // this.firstSendMsgsHome.push(item)  
       console.log('发的消息')
       this.messageSendContnet = true
       this.messageGetContnet = false
@@ -97,7 +98,6 @@ export default {
         useriid: JSON.parse(window.sessionStorage.getItem('user')).user_id,
         courseid: item.m_courseiid
       }).then(res => {
-        console.log(res);
           // 如果当前课程是当前用户创建的
           if(res.data.data) {
             // 该留言是当前客课程拥有者创建
@@ -105,10 +105,14 @@ export default {
                 const id1 = []
                 id1.push(item.m_geteriid)
                 queryUsersListsByIds({ids: id1}).then(res => {
-                  console.log(res);
                   this.$store.commit('commitStuInfoMessage', res.data.result[0])
+                  console.log('1: '  )
+                  console.log(res.data.result[0]);
                })
                this.$store.commit('commitTecInfoInMessage', JSON.parse(window.sessionStorage.getItem('user')))
+               console.log('2: ')
+               console.log(JSON.parse(window.sessionStorage.getItem('user')));
+               this.firstSendMsgsHome.push(item)
             } else {
               // 该留言不是当前课程拥有者创建
               const ids2 = []

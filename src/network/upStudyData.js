@@ -23,3 +23,11 @@ export function addDownNums(data) {
     data
   })
 }
+
+export function deleteRourse(data) {
+  return request({
+    url: '/upData/deleteRourse',
+    method: 'post',
+    data
+  })
+}

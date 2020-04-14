@@ -5,11 +5,12 @@
       <span class="rourseSize">大小</span>
       <span class="rourseDownNums">下载数</span>
       <span class="rourseUpTime">上传时间</span>
-      <span class="rourseDown">下载</span>
+      <span class="rourseDown" :class="{rourseDown_pa: isHaveDlete}">下载</span>
+      <span class="rourseDelete" v-if="isHaveDlete">删除</span>
     </div>
     
     <div class="havaCourseDatas" v-if="rousesInfo.length">
-      <course-item v-for="(item, index) in rousesInfo" :key="index" :one-rouses-info='item'></course-item>
+      <course-item v-for="(item, index) in rousesInfo" :is-delete='isHaveDlete' :key="index" :one-rouses-info='item'></course-item>
     </div>
     <div class="noCourseDatas" v-if="!rousesInfo.length">暂无资源</div>
   </div>  
@@ -24,6 +25,7 @@ export default {
   data () {
     return {
       isHaveDatas: false,
+      isDlete: true
     }
   },
   props: {
@@ -32,6 +34,10 @@ export default {
       default() {
         return []
       }
+    },
+    isHaveDlete: {
+      type: Boolean,
+      default: true
     }
   },
    
@@ -60,11 +66,17 @@ export default {
     color: #999;
   }
 
-  .rourseDown {
+  .rourseDown, .rourseDelete {
     height: 42px;
     width: 30px;
     line-height: 42px;
     font-size: 11px;
     color: #999;
   }
+
+  .rourseDown_pa {
+    margin-right: -10px;
+  }
+
+  
 </style>

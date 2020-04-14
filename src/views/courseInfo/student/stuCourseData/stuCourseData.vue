@@ -1,7 +1,7 @@
 <template>
   <div id="stuCourseData">
     <div class="stuDataline"></div>
-    <course-data-content :rouses-info='getCurrentCourseRourses'></course-data-content>
+    <course-data-content :is-have-dlete='false' :rouses-info='getCurrentCourseRourses'></course-data-content>
   </div>
 </template>
 
