@@ -106,9 +106,11 @@ export default {
       const iname = this.getCurrentUserId().name
        if(cteciid === currentUserid) {
          this.toTeacherCourse(ciid, name)
+          // window.sessionStorage.setItem('currentCourseInfo', '')
        } else {
          this.isHaveEnterCourse(currentUserid, ciid, iname)
         //  this.toStuCourse(ciid, iname)
+        //  window.sessionStorage.setItem('currentCourseInfo', '')
        }
     }
   },

@@ -54,11 +54,9 @@ export default {
           useriid: JSON.parse(window.sessionStorage.getItem('currentCourseInfo')).cteacheriid
       }).then(res => {
         // this.tecSomeInfo = res.data.result
-        console.log(res);
         this.$store.commit('commitTecInfoInMessage', res.data.userinfo)
       })
       }
-     
     },
     getStuSomeInfoFromTec() {
       this.$store.commit('commitStuInfoMessage', JSON.parse(window.sessionStorage.getItem('chatStuInfo')))
@@ -79,7 +77,6 @@ export default {
 </script>
 
 <style>
-  
   .messageItem {
     margin-top: 30px;
     padding-top: 10px;

@@ -23,6 +23,7 @@
     </div>
     <!-- 课程展示 -->
     <course-content :courses-info='queryUserEnterCourses' :delete-or-sing-out='!deleteCourse' v-if="enterShowl" class="courseContentStyle"></course-content>
+    
     <course-content :courses-info='queryUserCreateCourses' :delete-or-sing-out='deleteCourse' v-if="createShow" class="courseContentStyle"></course-content>
   </div>  
 </template>

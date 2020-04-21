@@ -61,8 +61,6 @@ export default {
   },
   methods: {
     getUpdataInfo(dataInfo) {
-      console.log('文件信息是: ')
-      console.log(dataInfo)
       this.upSuccessInfo.push(dataInfo)
       this.isHaveUp = true
       upStudyData({

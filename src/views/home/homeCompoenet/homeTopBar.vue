@@ -9,15 +9,6 @@
       <!-- 中间 -->
       <div class="center">
         <div class="topInfo">
-          <!-- <span class="nav ">课程</span> -->
-          <el-dropdown>
-            <span class="el-dropdown-link">课程<i class="el-icon-arrow-down el-icon--right"></i></span>
-            <el-dropdown-menu slot="dropdown" class="el-dropdown">
-              <el-dropdown-item v-for="(item, index) in courses" :key="index">{{item}}</el-dropdown-item>
-            </el-dropdown-menu>
-          </el-dropdown>
-          <span class="nav"><a>学校</a> </span>
-          
         </div>
         <div class="courseSearch" v-if="showAddCourseBtn">
           <el-input  placeholder="请输入课程邀请码" v-model="invitedCode"></el-input>
@@ -58,12 +49,11 @@ export default {
   },
   data() {
     return {
-       getHeadPic: '',
+      getHeadPic: '',
       //当前用户的id
       iid:'',
       //当前用户的名字
       iname: '',  
-      courses: ['小学','初中','高中','大学'],
       //邀请码
       invitedCode: '',
       enterCoursedialogVisible: false,

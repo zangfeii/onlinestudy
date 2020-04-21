@@ -8,8 +8,6 @@
       <span class="rourseSize">{{oneRousesInfo.datas[0].size}}</span>
       <span class="rourseDownNums">{{oneRousesInfo.Downnums}}</span>
       <span class="rourseUpTime">{{oneRousesInfo.upTime}}</span>
-      <!-- <a :href="oneRousesInfo.datas[0].path" @click="addDownNums(oneRousesInfo._id)"><i class="el-icon-download" title="下载"></i></a> -->
-      <!-- <a href="javascript:void(0)" @click="addDownNums(oneRousesInfo._id, oneRousesInfo.datas[0].path)"><i class="el-icon-download" title="下载"></i></a> -->
       <a href="javascript:void(0)" @click="addDownNums(oneRousesInfo)"><i class="el-icon-download" title="下载"></i></a>
       <a href="javascript:void(0)" @click="deleteRourse(oneRousesInfo._id)" v-if="isDelete"><i class="el-icon-delete" title="删除"></i></a>
     </div>
@@ -39,6 +37,7 @@ export default {
         useriid: JSON.parse(window.sessionStorage.getItem('user')).user_id,
         courseiid: dataInfos.courseiid
       }).then(res => {
+        console.log(res);
         if(res.data.status === 200) {
           window.location.href =  dataInfos.datas[0].path
         } else {

@@ -104,9 +104,7 @@ export default {
       } else if(this.$store.state.inMessageTec.name) {
         return '回复@' + this.$store.state.inMessageTec.name
       }
-      
     }
-
   },
   methods: {
     replaybtn() {

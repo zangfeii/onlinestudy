@@ -57,6 +57,8 @@ const searchCourse = () =>
   import ('../views/admin/adminCompoent/search/searchCourse.vue')
 const searchUser = () =>
   import ('../views/admin/adminCompoent/search/searchUser.vue')
+const error = () =>
+  import ('../views/infoError/error.vue')
   // 解决报Uncaught (in promise) undefined错误
 const originalPush = VueRouter.prototype.push
 VueRouter.prototype.push = function push(location) {
@@ -67,6 +69,12 @@ VueRouter.prototype.push = function push(location) {
 Vue.use(VueRouter)
 
 const routes = [{
+    path: '*',
+    component: error,
+    meta: {
+      title: '404 NOT FOUND'
+    }
+  }, {
     path: '/',
     redirect: 'login'
   },

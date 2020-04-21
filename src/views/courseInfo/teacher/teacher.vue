@@ -8,6 +8,7 @@
 <script>
 import homeTopBar from '../../home/homeCompoenet/homeTopBar'
 import courseMangeTitle from './teacherCompoent/courseMangeTitle'
+import { queryIsHaveCourse } from '../../../network/query'
 export default {
   name: 'teacher',
   components :{ homeTopBar, courseMangeTitle },
@@ -24,9 +25,14 @@ export default {
   },
   created() {
     document.title = this.$route.meta.title
+    console.log('22332');
   },
   methods: {
-    
+    queryCourseIsEsist() {
+      queryIsHaveCourse({
+        // useriid: 
+      })
+    }
   },
 }
 </script>

@@ -9,6 +9,7 @@ import 'element-ui/lib/theme-chalk/index.css';
 //安装
 Vue.use(ElementUI);
 
+//全局事件
 Vue.prototype.$bus = new Vue()
 
 Vue.config.productionTip = false

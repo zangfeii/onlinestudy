@@ -1,4 +1,4 @@
-import { request } from './request'
+import { request, request1 } from './request'
 
 export function queryCoursesById(data) {
   return request({
@@ -123,6 +123,14 @@ export function queryCurrentTecCourseInfo(data) {
 
 export function queryIsHaveCourse(data) {
   return request({
+    url: '/queryCourse/queryIsHaveCourse',
+    method: 'post',
+    data
+  })
+}
+
+export function beforeQueryCourseIsExist(data) {
+  return request1({
     url: '/queryCourse/queryIsHaveCourse',
     method: 'post',
     data

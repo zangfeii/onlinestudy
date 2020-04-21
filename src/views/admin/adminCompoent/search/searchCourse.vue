@@ -46,7 +46,7 @@ export default {
       queryCourse({
         searchContent: this.$route.params.course,
         page
-      }).then(res => {
+      }).then(res => { 
         if(res.data.status === 200) {
           console.log(res.data);
           this.queryCourses = res.data.result

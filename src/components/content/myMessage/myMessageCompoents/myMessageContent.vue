@@ -8,7 +8,6 @@
         </inbox-item>
       </div>
     </div>
-      
       <!-- <div class="getMsgs" v-if="!isSnedMsgs"> -->
         <div v-if="whenDetailsNone">
           <div class="getMsgs" v-if="isGetMsgs">
@@ -18,8 +17,6 @@
             </inbox-item>
           </div>
         </div>
-     
-   
     <!-- 发送消息详情展示 -->
     <div v-if="messageSendContnet">
       <message-content-item :messages-datas='firstSendMsgsHome'
@@ -38,7 +35,6 @@
         :is-tec-leave-msgs='isTecFirstLeaveMsg1'>
       </message-content-item>
     </div>
-    
   </div>  
 </template>
 
@@ -98,6 +94,7 @@ export default {
         useriid: JSON.parse(window.sessionStorage.getItem('user')).user_id,
         courseid: item.m_courseiid
       }).then(res => {
+        console.log('2121');
           // 如果当前课程是当前用户创建的
           if(res.data.data) {
             // 该留言是当前客课程拥有者创建
@@ -140,7 +137,6 @@ export default {
             }
           }
       })
-      
     },
     getMsgsClick(item) {
       console.log('接受的消息')
