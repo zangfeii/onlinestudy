@@ -51,9 +51,8 @@ export default {
     getTecSomeInfo() {
       if(JSON.parse(window.sessionStorage.getItem('currentCourseInfo'))) {
          queryUserInfoById({
-          useriid: JSON.parse(window.sessionStorage.getItem('currentCourseInfo')).cteacheriid
+           useriid: JSON.parse(window.sessionStorage.getItem('currentCourseInfo')).cteacheriid
       }).then(res => {
-        // this.tecSomeInfo = res.data.result
         this.$store.commit('commitTecInfoInMessage', res.data.userinfo)
       })
       }

@@ -15,7 +15,7 @@
           <span class="DataName">{{item.name}}</span>
           <span class="DataSize">{{item.size}}</span>
           <span> 
-            <img src="http://127.0.0.1:3000/public/img/upSuessIon.jpg" class="successIcon">
+            <img src="http://192.168.1.8:8081/public/img/upSuessIon.jpg" class="successIcon">
           </span>
         </div>
       </div>

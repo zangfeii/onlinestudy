@@ -1,7 +1,7 @@
 <template>
   <div id="home">
     <home-top-bar @clickUserName='clickUser'></home-top-bar>  
-     <home-tab-bar ref='homeTabBarRef' class="homeTatBarTitles" :tab-bar-titles='homeBarTitles' ></home-tab-bar>
+    <home-tab-bar ref='homeTabBarRef' class="homeTatBarTitles" :tab-bar-titles='homeBarTitles' ></home-tab-bar>
   </div>  
 </template>
 

@@ -1,6 +1,6 @@
 <template>
   <div id="upload">
-    <el-upload class="avatar-uploader" action="http://127.0.0.1:3000/api/upload/uploadPic" :show-file-list="false"
+    <el-upload class="avatar-uploader" action="http://192.168.1.8:8081/api/upload/uploadPic" :show-file-list="false"
       :on-success="handleAvatarSuccess">
       <p>{{upLoadName}}</p>
       <!-- :before-upload="beforeAvatarUpload" -->

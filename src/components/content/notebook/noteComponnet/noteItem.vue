@@ -87,7 +87,8 @@ export default {
  }
 
  .noteCoverContnet:hover {
-   background: #E5E5E5;
+   transition-duration: .4s;
+   background: #F3F3F3;
  }
  
  .noteCoverContnet:hover .deleteNote {

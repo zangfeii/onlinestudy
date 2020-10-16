@@ -5,9 +5,11 @@ import { beforeQueryCourseIsExist } from './query'
 
 export function request(confing) {
   const instace1 = axios.create({
-    baseURL: 'http://127.0.0.1:3000/api',
-    timeout: 5000,
-  })
+       baseURL: 'http://127.0.0.1:3000/api',
+     // baseURL: 　 'http://192.168.1.8:8082/api',
+      timeout: 5000,
+    })
+    // 请求拦截
   instace1.interceptors.request.use(confing => {
       confing.headers.Authorization = window.sessionStorage.getItem('token')
       if (window.location.pathname.substr(0, 9) === '/myCourse') {
@@ -37,7 +39,8 @@ export function request(confing) {
 
 export function request1(confing) {
   const instace2 = axios.create({
-    baseURL: 'http://127.0.0.1:3000/api',
+     baseURL: 'http://127.0.0.1:3000/api',
+    //baseURL: 　 'http://192.168.1.8:8082/api',
     timeout: 5000
   })
   instace2.interceptors.request.use(confing => {

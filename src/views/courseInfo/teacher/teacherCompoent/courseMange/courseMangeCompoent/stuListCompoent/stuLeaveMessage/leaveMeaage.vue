@@ -7,7 +7,7 @@
       <el-button type='success' size='mini' class="sendMeaage" @click="sendMessage">发送</el-button>
     </div>
     <message-content-item ref='messageContentItemRef' :messages-datas='messagesData'></message-content-item>
-    <message-content-item ref='messageContentItemRef'  :is-tec-leave-msgs='false' :is-stus-rplay='false'   :messages-datas='stuLeaveMessagesData'></message-content-item>
+    <message-content-item ref='messageContentItemRef'  :is-tec-leave-msgs='false' :is-stus-rplay='false' :messages-datas='stuLeaveMessagesData'></message-content-item>
   </div>  
 </template>
 

@@ -109,7 +109,7 @@ export default {
     display: flex;
     flex-flow: wrap;
     justify-items: center;
-    background: #F7F7F7;
+    /* background: #F7F7F7; */
   }
 
   .updateNoteDetilsBtn {

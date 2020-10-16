@@ -15,7 +15,7 @@
         </div>
         <div>
           <el-tooltip content="删除" placement="top">
-            <i class="el-icon-delete deleteBtn" v-show="deleteBtn"   @click="deleteClick(courseTopicItemData._id, courseTopicItemData.tp_courseiid, courseTopicItemData.tp_courseTeacheriid)"></i>
+            <i class="el-icon-delete deleteBtn" v-show="deleteBtn" @click="deleteClick(courseTopicItemData._id, courseTopicItemData.tp_courseiid, courseTopicItemData.tp_courseTeacheriid)"></i>
           </el-tooltip>
           <el-tooltip content="置顶" placement="top" v-if='!courseTopicItemData.tp_isTop' v-show="deleteBtn">
              <i class="el-icon-top deleteBtn" @click="toTop(courseTopicItemData._id, courseTopicItemData.tp_courseiid, courseTopicItemData.tp_courseTeacheriid)"></i>

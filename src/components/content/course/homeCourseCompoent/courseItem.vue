@@ -178,7 +178,9 @@ export default {
   }
 
   .itemCourse:hover {
-    box-shadow:0px 0px 2px 3px skyblue;
+    transform: scale(1.05);
+    transition-duration: .3s;
+    /* box-shadow:10px 10px 8px 3px skyblue; */
   }
 
   .hoverDeleteSingOut {

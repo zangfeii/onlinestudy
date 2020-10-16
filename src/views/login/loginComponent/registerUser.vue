@@ -212,5 +212,4 @@ export default {
   .isregister a:hover {
     color: aquamarine !important;
   }
-
 </style>

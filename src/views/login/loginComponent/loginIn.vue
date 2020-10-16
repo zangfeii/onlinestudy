@@ -8,6 +8,7 @@
         <el-form-item label="密  码" prop="pwd">
           <el-input  v-model="loginForm.pwd" autocomplete="off" prefix-icon='el-icon-lock' show-password></el-input>
         </el-form-item>
+        <verify-code ref='verifyCodeRef' class="verifyCode"></verify-code>
       </el-form>
       <div class="Btn">
         <el-button type="success" class="btn" @click="login">登陆</el-button>
@@ -27,16 +28,19 @@
 
 <script>
 import {userLogin, getCotranct} from '../../../network/user'
+import verifyCode from '../../../components/common/verifyCode'
 
 export default {
   name: 'loginIn',
+  components: { verifyCode },
   data() {
     return {
       remindDialogVisible: false,
       connectionQQ: '',
       loginForm: {
-        name: '',
-        pwd: '',
+        name: '老师',
+        pwd: '123456',
+        verifyCode: ''
       },
       paramsform: {
         iid : '',
@@ -50,6 +54,9 @@ export default {
         pwd: [
           { required: true, message: '请输入密码', trigger: 'blur'},
           { min: 6, max: 12, message: '密码长度在6至12位之间', trigger: 'blur' }
+        ],
+        verifyCode :[
+          { required: true, message: '请输入验证码', trigger: 'blur'}
         ]
       }
     }
@@ -59,50 +66,61 @@ export default {
       this.$router.push('/register') 
     },
     login() {
+      let veifyCodeResult = this.$refs.verifyCodeRef.ischekCode
+      console.log(this.$refs.verifyCodeRef)
       this.$refs.loginForm.validate(valid =>{
-        if(!valid) {
-          return this.$message.error("请安要求填写")
+        if(!valid || !veifyCodeResult) {
+          return this.$message.error('请填写完整')
         } 
-        userLogin(this.loginForm).then((res => {
-        if(res.data.status === 200) {
-          if(res.data.userInfo.status === 1 &&  res.data.userInfo.role <= 2) {
-          this.paramsform.iid = res.data.userInfo.user_id
-          this.paramsform.iname = res.data.userInfo.name
-          // 在sessionStorage中储存token
-          window.sessionStorage.setItem('token', res.data.token)
-          // 在sessionStorage中储存头像图片
-          window.sessionStorage.setItem('headpic', res.data.userInfo.hpic)
-          //保存用户信息
-          delete res.data.userInfo.role
-          window.sessionStorage.setItem('user', JSON.stringify(res.data.userInfo))
+        // userLogin(this.loginForm).then((res => {
+        // if(res.data.status === 200) {
+        //   if(res.data.userInfo.status === 1 &&  res.data.userInfo.role <= 2) {
+        //   this.paramsform.iid = res.data.userInfo.user_id
+        //   this.paramsform.iname = res.data.userInfo.name
+        //   // 在sessionStorage中储存token
+        //   window.sessionStorage.setItem('token', res.data.token)
+        //   // 在sessionStorage中储存头像图片
+        //   window.sessionStorage.setItem('headpic', res.data.userInfo.hpic)
+        //   //保存用户信息
+        //   delete res.data.userInfo.role
+        //   window.sessionStorage.setItem('user', JSON.stringify(res.data.userInfo))
+        //   this.$router.push({
+        //     name: 'home',
+        //     params:  this.paramsform
+        //   })
+        //   return this.$message.success("登陆成功")
+        //   } else if(res.data.userInfo.role === 3) {
+        //     window.sessionStorage.setItem('token', res.data.token)
+        //     delete res.data.userInfo.role
+        //     window.sessionStorage.setItem('user', JSON.stringify(res.data.userInfo))
+        //     this.$router.push('/adminhome')
+        //    } else {
+        //       getCotranct().then(res => {
+        //         this.connectionQQ = res.data
+        //         this.remindDialogVisible = true
+        //         return
+        //       })
+        //     }
+        // } else {
+        //    return this.$message.error("登陆失败,请检查账号密码")
+        // }
+        // }))
+         window.sessionStorage.setItem('token',  'ADADADADDA')
+          this.paramsform.iid = 'idjaoijoij1jewia09201'
+          this.paramsform.iname = '老师'
           this.$router.push({
             name: 'home',
-            params:  this.paramsform
+            params: this.paramsform
           })
-          return this.$message.success("登陆成功")
-          } else if(res.data.userInfo.role === 3) {
-            window.sessionStorage.setItem('token', res.data.token)
-            delete res.data.userInfo.role
-            window.sessionStorage.setItem('user', JSON.stringify(res.data.userInfo))
-            this.$router.push('/adminhome')
-           } else {
-              getCotranct().then(res => {
-                this.connectionQQ = res.data
-                this.remindDialogVisible = true
-                return
-              })
-            }
-        } else {
-           return this.$message.error("登陆失败,请检查账号密码")
-        }
-        }))
+          console.log(this.$router)
+          // this.$router.push('/register')
       })
     }
   }, 
 }
 </script>
 
-<style>
+<style scoped>
   #loginInn {
     display: flex;
     flex-direction: column;
@@ -127,5 +145,9 @@ export default {
   .btn {
     width: 140px;
     height: 40px;
+  }
+   
+  .verifyCode {
+    margin-bottom: 10px;
   }
 </style>

@@ -95,7 +95,6 @@ export default {
         if(res.data.status === 210) {
           this.toStuCourse(courseid, name)
         } else {
-          // this.$message.error('请先先进入该课程')
           return
         }
       })
@@ -106,11 +105,8 @@ export default {
       const iname = this.getCurrentUserId().name
        if(cteciid === currentUserid) {
          this.toTeacherCourse(ciid, name)
-          // window.sessionStorage.setItem('currentCourseInfo', '')
        } else {
          this.isHaveEnterCourse(currentUserid, ciid, iname)
-        //  this.toStuCourse(ciid, iname)
-        //  window.sessionStorage.setItem('currentCourseInfo', '')
        }
     }
   },

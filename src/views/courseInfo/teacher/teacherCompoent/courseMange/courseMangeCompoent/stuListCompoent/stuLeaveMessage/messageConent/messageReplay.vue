@@ -23,7 +23,7 @@
       <p class="rep1">{{repMsgs.replayTecMessage}}</p>
     </div>
     <!-- 老师回复学生带@ -->
-     <div class="replayNotoStu" v-if="repMsgs.replayAtStuMsg">
+    <div class="replayNotoStu" v-if="repMsgs.replayAtStuMsg">
       <img :src="this.$store.state.inMessageTec.hpci || this.$store.state.inMessageTec.headPic || this.$store.state.inMessageTec.hpic" class="tecImg">
       <div class="reptimename">
         <span class="senderName">{{this.$store.state.inMessageTec.userName || this.$store.state.inMessageTec.name}}</span><br>

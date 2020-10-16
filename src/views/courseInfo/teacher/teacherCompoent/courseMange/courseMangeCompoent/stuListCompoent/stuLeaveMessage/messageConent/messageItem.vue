@@ -113,9 +113,9 @@ export default {
     },
     getReplayMsgs() {
       if(this.aMessage.m_message.length >=2 ) {
-      this.cpMsgData =  JSON.parse(JSON.stringify(this.aMessage.m_message)) 
-      this.cpMsgData.splice(0, 1)
-      console.log(this.cpMsgData);
+        this.cpMsgData =  JSON.parse(JSON.stringify(this.aMessage.m_message)) 
+        this.cpMsgData.splice(0, 1)
+        console.log(this.cpMsgData)
       }
     },
     TecReplayNoAt() {

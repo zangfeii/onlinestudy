@@ -10,8 +10,6 @@
         <div class="enterCourse" v-if="createCourse"><i class="el-icon-circle-plus-outline"></i> 进入课程</div>
         <div class="createCourse" v-if="!createCourse" @click="addCourse"><i class="el-icon-circle-plus-outline"></i> 创建课程</div>
       </div>
-      <!-- <up-load></up-load> -->
-      
       <!-- 创建课程提示 -->
       <el-dialog title="提示" :visible.sync="addCourseDialogVisible" width="30%">
         <span>该账号不能创建课程,请联系管理员获取<a :href="connectQQ">466602093</a></span>
@@ -23,7 +21,6 @@
     </div>
     <!-- 课程展示 -->
     <course-content :courses-info='queryUserEnterCourses' :delete-or-sing-out='!deleteCourse' v-if="enterShowl" class="courseContentStyle"></course-content>
-    
     <course-content :courses-info='queryUserCreateCourses' :delete-or-sing-out='deleteCourse' v-if="createShow" class="courseContentStyle"></course-content>
   </div>  
 </template>
@@ -137,7 +134,6 @@ export default {
     addCourse() {
       const id = JSON.parse(window.sessionStorage.getItem('user')).user_id
       queryUsersListsByIds({ids: id}).then(res => {
-        console.log();
         if(res.data.status === 200) {
           if(res.data.result[0].role === 1) {
             getCotranct().then(res => {

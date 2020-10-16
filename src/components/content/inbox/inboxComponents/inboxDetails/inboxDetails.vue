@@ -5,7 +5,6 @@
       <span class="currentNoticeSender">{{noticeDetailInfo.sender}}课堂</span>
       <span class="currentNoticeSendTime">{{noticeDetailInfo.n_sendtime}}</span>
     </div>
-    
     <p class="currentNiticeConent">{{noticeDetailInfo.n_content}}</p>
   </div>
 </template>

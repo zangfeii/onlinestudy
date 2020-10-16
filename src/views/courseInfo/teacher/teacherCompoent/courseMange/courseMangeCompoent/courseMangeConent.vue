@@ -114,7 +114,7 @@ export default {
   methods: {
     //修改课程封面
     updateCourseCoverPic(basePicPath) {
-      const courseCoverImgPath = 'http://127.0.0.1:3000/public/img/' + basePicPath
+      const courseCoverImgPath = 'http://192.168.1.8:8081/public/img/' + basePicPath
       updateCourseCoverImg({
         courseiid: this.mangeCourseInfo._id,
         teacheriid: this.mangeCourseInfo.cteacheriid,
@@ -282,7 +282,5 @@ export default {
      margin-left: 20px;
   } 
 
-  .courseDesc {
-    
-  }
+ 
 </style>
